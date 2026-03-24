@@ -147,3 +147,30 @@ button {
     70% { opacity: 1; }
     100% { opacity: 0; transform: translateY(-10px); }
 }
+
+.right-panel {
+    left: auto;
+    right: -320px;
+}
+
+.right-panel.open {
+    right: 0;
+}
+
+.right-handle {
+    position: absolute;
+    top: 20px;
+    left: -45px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+/* optional delete styling */
+.delete-btn {
+    background: #ef4444;
+    color: white;
+}
