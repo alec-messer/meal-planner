@@ -80,6 +80,11 @@ button {
     left: 20px;
     z-index: 2000;
     cursor: pointer;
+    transition: left 0.3s ease;
+}
+
+.side-panel.open ~ .open-panel {
+    left: 320px;
 }
 
 /* INGREDIENT ROW */
