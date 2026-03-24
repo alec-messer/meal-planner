@@ -3,11 +3,6 @@ import json
 import psycopg2
 from flask import Flask, render_template, request, redirect
 
-app = Flask(__name__)
-
-DATABASE_URL = os.environ.get('DATABASE_URL')
-
-
 def get_db():
     try:
         print("Connecting to DB...")
@@ -36,6 +31,11 @@ def init_db():
     cur.close()
     conn.close()
 
+app = Flask(__name__)
+
+@app.before_first_request
+def setup():
+    init_db()
 
 @app.route('/')
 def index():
@@ -45,6 +45,7 @@ def index():
     cur.execute("SELECT name, ingredients FROM meals")
     rows = cur.fetchall()
 
+    cur.close()
     conn.close()
 
     meals = {name: ingredients for name, ingredients in rows}
