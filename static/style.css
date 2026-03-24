@@ -55,3 +55,49 @@ button {
     gap: 8px;
     margin-bottom: 8px;
 }
+
+/* SIDE PANEL */
+.side-panel {
+    position: fixed;
+    top: 0;
+    left: -320px;
+    width: 300px;
+    height: 100%;
+    background: white;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+    transition: left 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.side-panel.open {
+    left: 0;
+}
+
+.open-panel {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1100;
+    border-radius: 10px;
+}
+
+/* INGREDIENT ROW */
+.ingredient-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+/* VERTICAL WEEK */
+.week-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.day {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
