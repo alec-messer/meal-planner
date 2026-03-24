@@ -78,7 +78,7 @@ def add_meal():
     cur.close()
     conn.close()
 
-    return redirect('/')
+    return render_template('index.html', meals=meals, success=True)
 
 
 if __name__ == '__main__':
