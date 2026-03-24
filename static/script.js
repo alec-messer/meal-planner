@@ -79,3 +79,18 @@ document.addEventListener('input', () => {
 
     document.getElementById('submitMeal').disabled = !valid;
 });
+
+document.getElementById('mealForm').addEventListener('submit', () => {
+    setTimeout(() => {
+        document.getElementById('mealForm').reset();
+
+        const container = document.getElementById('ingredients-container');
+
+        container.innerHTML = `
+            <div class="ingredient-row">
+                <input name="ingredient_name[]" placeholder="Ingredient" required>
+                <input name="ingredient_qty[]" placeholder="Qty" type="number" step="any" required>
+            </div>
+        `;
+    }, 50);
+});
