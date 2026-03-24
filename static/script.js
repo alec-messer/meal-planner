@@ -39,7 +39,23 @@ function generateList() {
 
     const sorted = Object.keys(totals).sort();
 
-    let output = 'Shopping List\n\n';
+    // 📅 GET FORMATTED DATE
+    const now = new Date();
+
+    const days = [
+        'Sunday','Monday','Tuesday','Wednesday',
+        'Thursday','Friday','Saturday'
+    ];
+
+    const dayName = days[now.getDay()];
+
+    const date = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+
+    const dateHeader = `${dayName} ${date}/${month}`;
+
+    // 🧾 BUILD OUTPUT
+    let output = `Shopping List\n${dateHeader}\n\n`;
 
     sorted.forEach(item => {
         output += `${item}: ${totals[item]}\n`;
