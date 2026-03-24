@@ -116,3 +116,15 @@ button {
     width: 100%;
     min-width: 0; /* prevents overflow issues */
 }
+
+.panel-handle {
+    position: absolute;
+    top: 20px;
+    right: -45px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
