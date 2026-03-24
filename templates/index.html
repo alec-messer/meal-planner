@@ -43,6 +43,30 @@
     </div>
 </div>
 
+<!-- RIGHT PANEL (DELETE MEAL) -->
+<div id="deletePanel" class="side-panel right-panel">
+
+    <button class="panel-handle right-handle" onclick="toggleDeletePanel()">☰</button>
+
+    <div class="panel-content">
+
+        <h2>Delete Meal</h2>
+
+        <form method="POST" action="/delete_meal">
+
+            <select name="name" required>
+                <option value="">Select meal</option>
+                {% for meal in meals.keys() %}
+                <option value="{{ meal }}">{{ meal }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="delete-btn">Delete meal</button>
+
+        </form>
+
+    </div>
+</div>
 
 <div class="app">
 
