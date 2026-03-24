@@ -4,6 +4,10 @@ body {
     margin: 0;
 }
 
+/* =========================
+   APP LAYOUT
+========================= */
+
 .app {
     max-width: 1100px;
     margin: auto;
@@ -18,15 +22,9 @@ body {
     box-shadow: 0 10px 30px rgba(0,0,0,0.06);
 }
 
-.week {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-}
-
-.day {
-    min-width: 120px;
-}
+/* =========================
+   INPUTS / BUTTONS
+========================= */
 
 input, select {
     width: 100%;
@@ -44,56 +42,17 @@ button {
     border: none;
     background: black;
     color: white;
+    cursor: pointer;
 }
 
 .hidden {
     display: none;
 }
 
-.row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 8px;
-}
+/* =========================
+   WEEK PLANNER
+========================= */
 
-/* SIDE PANEL */
-.side-panel {
-    position: fixed;
-    top: 0;
-    width: 300px;
-    height: 100%;
-    background: white;
-    box-shadow: 10px 0 30px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-    z-index: 1500;
-    padding: 20px;
-}
-
-.side-panel.open {
-    left: 0;
-}
-
-.open-panel {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 2000;
-    cursor: pointer;
-    transition: left 0.3s ease;
-}
-
-.side-panel.open ~ .open-panel {
-    left: 320px;
-}
-
-/* INGREDIENT ROW */
-.ingredient-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 8px;
-}
-
-/* VERTICAL WEEK */
 .week-vertical {
     display: flex;
     flex-direction: column;
@@ -113,20 +72,23 @@ button {
 
 .meal-select {
     width: 100%;
-    min-width: 0; /* prevents overflow issues */
+    min-width: 0;
 }
 
-.panel-handle {
-    position: absolute;
-    top: 20px;
-    right: -45px;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    cursor: pointer;
+/* =========================
+   INGREDIENT ROWS
+========================= */
+
+.row,
+.ingredient-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
 }
+
+/* =========================
+   SUCCESS MESSAGE
+========================= */
 
 .success-banner {
     position: fixed;
@@ -147,13 +109,62 @@ button {
     100% { opacity: 0; transform: translateY(-10px); }
 }
 
-.right-panel {
-    left: auto;
-    right: -320px;
+/* =========================
+   SIDE PANEL BASE (IMPORTANT)
+========================= */
+
+.side-panel {
+    position: fixed;
+    top: 0;
+    width: 300px;
+    height: 100%;
+    background: white;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    z-index: 1500;
+    padding: 20px;
 }
 
-.right-panel.open {
+/* =========================
+   LEFT PANEL (ADD MEAL)
+========================= */
+
+#sidePanel {
+    left: 0;
+    transform: translateX(-110%);
+}
+
+#sidePanel.open {
+    transform: translateX(0);
+}
+
+/* =========================
+   RIGHT PANEL (DELETE MEAL)
+========================= */
+
+#deletePanel {
     right: 0;
+    transform: translateX(110%);
+}
+
+#deletePanel.open {
+    transform: translateX(0);
+}
+
+/* =========================
+   PANEL BUTTONS
+========================= */
+
+.panel-handle {
+    position: absolute;
+    top: 20px;
+    right: -45px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
 }
 
 .right-handle {
@@ -168,27 +179,23 @@ button {
     cursor: pointer;
 }
 
-/* optional delete styling */
+/* =========================
+   OPEN BUTTON (if used)
+========================= */
+
+.open-panel {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 2000;
+    cursor: pointer;
+}
+
+/* =========================
+   OPTIONAL DELETE BUTTON STYLE
+========================= */
+
 .delete-btn {
     background: #ef4444;
     color: white;
 }
-
-#sidePanel {
-    left: 0;
-    transform: translateX(-110%);
-}
-
-#sidePanel.open {
-    transform: translateX(0);
-}
-
-#sidePanel {
-    left: 0;
-    transform: translateX(-110%);
-}
-
-#sidePanel.open {
-    transform: translateX(0);
-}
-
