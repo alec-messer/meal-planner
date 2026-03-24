@@ -60,12 +60,11 @@ button {
 .side-panel {
     position: fixed;
     top: 0;
-    left: -320px;
     width: 300px;
     height: 100%;
     background: white;
     box-shadow: 10px 0 30px rgba(0,0,0,0.1);
-    transition: left 0.3s ease;
+    transition: transform 0.3s ease;
     z-index: 1500;
     padding: 20px;
 }
@@ -174,3 +173,22 @@ button {
     background: #ef4444;
     color: white;
 }
+
+#sidePanel {
+    left: 0;
+    transform: translateX(-110%);
+}
+
+#sidePanel.open {
+    transform: translateX(0);
+}
+
+#sidePanel {
+    left: 0;
+    transform: translateX(-110%);
+}
+
+#sidePanel.open {
+    transform: translateX(0);
+}
+
