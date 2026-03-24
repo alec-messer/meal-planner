@@ -70,13 +70,29 @@ def add_meal():
     cur = conn.cursor()
 
     cur.execute(
-        "INSERT INTO meals (name, ingredients) VALUES (%s, %s) ON CONFLICT (name) DO NOTHING",
+        """
+        INSERT INTO meals (name, ingredients)
+        VALUES (%s, %s)
+        ON CONFLICT (name) DO NOTHING
+        """,
         (name, json.dumps(ingredients))
     )
 
     conn.commit()
     cur.close()
     conn.close()
+
+    # ✅ RELOAD meals here (this fixes your error)
+    conn = get_db()
+    cur = conn.cursor()
+
+    cur.execute("SELECT name, ingredients FROM meals")
+    rows = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    meals = {name: ingredients for name, ingredients in rows}
 
     return render_template('index.html', meals=meals, success=True)
 
