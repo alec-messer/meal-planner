@@ -1,3 +1,7 @@
+function toggleDeletePanel() {
+    document.getElementById('deletePanel').classList.toggle('open');
+}
+
 function togglePanel() {
     const panel = document.getElementById('sidePanel');
     panel.classList.toggle('open');
