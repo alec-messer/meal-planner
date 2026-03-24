@@ -1,3 +1,22 @@
+function togglePanel() {
+    const panel = document.getElementById('sidePanel');
+    panel.classList.toggle('open');
+}
+
+function addIngredient() {
+    const container = document.getElementById('ingredients-container');
+
+    const row = document.createElement('div');
+    row.className = 'ingredient-row';
+
+    row.innerHTML = `
+        <input name="ingredient_name[]" placeholder="Ingredient" required>
+        <input name="ingredient_qty[]" placeholder="Qty" type="number" step="any" required>
+    `;
+
+    container.appendChild(row);
+}
+
 function generateList() {
     const selects = document.querySelectorAll('.meal-select');
     const totals = {};
@@ -9,10 +28,7 @@ function generateList() {
             const ingredients = MEALS[meal];
 
             Object.keys(ingredients).forEach(item => {
-                if (!totals[item]) {
-                    totals[item] = 0;
-                }
-                totals[item] += ingredients[item];
+                totals[item] = (totals[item] || 0) + ingredients[item];
             });
         }
     });
@@ -26,9 +42,7 @@ function generateList() {
     });
 
     document.getElementById('output').innerText = output;
-
-    // 👇 SHOW THE CARD
-    document.getElementById('output-card').style.display = 'block';
+    document.getElementById('output-card').classList.remove('hidden');
 }
 
 function shareList() {
@@ -49,16 +63,22 @@ function shareList() {
     }
 }
 
-function addIngredient() {
-    const container = document.getElementById('ingredients-container');
+/* ✅ FORM VALIDATION */
+document.addEventListener('input', () => {
+    const name = document.getElementById('mealName').value.trim();
+    const names = document.querySelectorAll('input[name="ingredient_name[]"]');
+    const qtys = document.querySelectorAll('input[name="ingredient_qty[]"]');
 
-    const row = document.createElement('div');
-    row.className = 'ingredient-row';
+    let valid = name.length > 0;
 
-    row.innerHTML = `
-        <input name="ingredient_name[]" placeholder="Ingredient" required>
-        <input name="ingredient_qty[]" placeholder="Qty" type="number" step="any" required>
-    `;
+    names.forEach((n, i) => {
+        if (!n.value.trim() || !qtys[i].value) {
+            valid = false;
+        }
+    });
+
+    document.getElementById('submitMeal').disabled = !valid;
+});
 
     container.appendChild(row);
 }
