@@ -1,6 +1,7 @@
 import os
 import json
 import psycopg2
+from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
@@ -9,10 +10,15 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 
 
 def get_db():
-    return psycopg2.connect(
-        DATABASE_URL,
-        sslmode='require'
-    )
+    try:
+        print("Connecting to DB...")
+        return psycopg2.connect(
+            os.environ['DATABASE_URL'],
+            sslmode='require'
+        )
+    except Exception as e:
+        print("DB ERROR:", e)
+        raise
 
 
 def init_db():
