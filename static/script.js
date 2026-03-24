@@ -79,6 +79,3 @@ document.addEventListener('input', () => {
 
     document.getElementById('submitMeal').disabled = !valid;
 });
-
-    container.appendChild(row);
-}
