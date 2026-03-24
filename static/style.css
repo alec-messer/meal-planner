@@ -66,7 +66,7 @@ button {
     background: white;
     box-shadow: 10px 0 30px rgba(0,0,0,0.1);
     transition: left 0.3s ease;
-    z-index: 1000;
+    z-index: 1500;
     padding: 20px;
 }
 
@@ -78,8 +78,8 @@ button {
     position: fixed;
     top: 20px;
     left: 20px;
-    z-index: 1100;
-    border-radius: 10px;
+    z-index: 2000;
+    cursor: pointer;
 }
 
 /* INGREDIENT ROW */
@@ -97,7 +97,17 @@ button {
 }
 
 .day {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 60px 1fr;
     align-items: center;
+    gap: 10px;
+}
+
+.day label {
+    font-weight: 500;
+}
+
+.meal-select {
+    width: 100%;
+    min-width: 0; /* prevents overflow issues */
 }
