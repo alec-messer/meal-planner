@@ -1,7 +1,6 @@
 import os
 import json
 import psycopg2
-from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
