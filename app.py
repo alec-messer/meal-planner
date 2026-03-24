@@ -96,6 +96,30 @@ def add_meal():
 
     return render_template('index.html', meals=meals, success=True)
 
+@app.route('/delete_meal', methods=['POST'])
+def delete_meal():
+    name = request.form['name']
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    try:
+        cur.execute(
+            "DELETE FROM meals WHERE name = %s",
+            (name,)
+        )
+        conn.commit()
+
+    except Exception as e:
+        conn.rollback()
+        print("DELETE ERROR:", e)
+        return "Error deleting meal", 500
+
+    finally:
+        cur.close()
+        conn.close()
+
+    return redirect('/')
 
 if __name__ == '__main__':
     init_db()
