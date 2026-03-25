@@ -105,7 +105,8 @@ def add_meal():
 
     meals = {name: ingredients for name, ingredients in rows}
 
-    return render_template('index.html', meals=meals, success=True)
+    # return render_template('index.html', meals=meals, success=True)
+    return redirect('/?success=1')
 
 @app.route('/delete_meal', methods=['POST'])
 def delete_meal():
