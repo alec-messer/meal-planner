@@ -157,12 +157,13 @@ button {
 
 .panel-handle {
     position: absolute;
-    bottom: 20px;   /* moved from top */
-    top: auto;
-    right: -45px;
+    bottom: calc(80px + env(safe-area-inset-bottom));
+    right: -20px;
+
     width: 44px;
     height: 44px;
     border-radius: 12px;
+
     background: white;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     cursor: pointer;
@@ -171,19 +172,20 @@ button {
     align-items: center;
     justify-content: center;
 
-    font-size: 22px;     /* polish */
-    font-weight: 600;    /* polish */
+    font-size: 22px;
+    font-weight: 600;
     color: black;
 }
 
 .right-handle {
     position: absolute;
-    bottom: 20px;   /* moved from top */
-    top: auto;
-    left: -45px;
+    bottom: calc(80px + env(safe-area-inset-bottom));
+    left: -20px;
+
     width: 44px;
     height: 44px;
     border-radius: 12px;
+
     background: white;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     cursor: pointer;
