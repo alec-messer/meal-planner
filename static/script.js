@@ -40,7 +40,15 @@ function addIngredient() {
 
 function generateList() {
     const selects = document.querySelectorAll('.meal-select');
-    const totals = {};
+
+    // Grouped totals by type
+    const totals = {
+        meat: {},
+        dairy: {},
+        fruit: {},
+        veg: {},
+        other: {}
+    };
 
     selects.forEach(select => {
         const meal = select.value;
@@ -49,56 +57,57 @@ function generateList() {
             const ingredients = MEALS[meal];
 
             Object.keys(ingredients).forEach(item => {
-                totals[item] = (totals[item] || 0) + ingredients[item];
+                const data = ingredients[item]; // {qty, unit, type}
+                const type = data.type || 'other';
+
+                if (!totals[type][item]) {
+                    totals[type][item] = {
+                        qty: 0,
+                        unit: data.unit
+                    };
+                }
+
+                totals[type][item].qty += data.qty;
             });
         }
     });
 
-    const sorted = Object.keys(totals).sort();
-
-    // 📅 GET FORMATTED DATE
+    // 📅 DATE
     const now = new Date();
-
-    const days = [
-        'Sunday','Monday','Tuesday','Wednesday',
-        'Thursday','Friday','Saturday'
-    ];
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
     const dayName = days[now.getDay()];
-
     const date = String(now.getDate()).padStart(2, '0');
     const month = String(now.getMonth() + 1).padStart(2, '0');
 
     const dateHeader = `${dayName} ${date}/${month}`;
 
-    // 🧾 BUILD OUTPUT
     let output = `Shopping List\n${dateHeader}\n\n`;
 
-    const rows = sorted.map(item => {
-        const match = item.match(/^(.*)\s\((.*)\)$/);
-    
-        let name = item;
-        let unit = '';
-    
-        if (match) {
-            name = match[1];
-            unit = match[2];
-        }
-    
-        const qty = totals[item];
-    
-        const left = unit ? `${qty} (${unit})` : `${qty}`;
-    
-        return { name, left };
-    });
-    
-    // Find max width of left column
-    const maxLeftLength = Math.max(...rows.map(r => r.left.length));
-    
-    // Second pass: build output with padding
-    rows.forEach(row => {
-        const paddedLeft = row.left.padEnd(maxLeftLength, ' ');
-        output += `${paddedLeft}  ${row.name}\n`;
+    const typeOrder = ['meat', 'veg', 'fruit', 'dairy', 'other'];
+
+    typeOrder.forEach(type => {
+        const items = totals[type];
+
+        if (Object.keys(items).length === 0) return;
+
+        output += `${type.toUpperCase()}\n\n`;
+
+        // Build rows for alignment
+        const rows = Object.keys(items).sort().map(item => {
+            const { qty, unit } = items[item];
+            const left = `${qty} (${unit})`;
+            return { name: item, left };
+        });
+
+        const maxLeftLength = Math.max(...rows.map(r => r.left.length));
+
+        rows.forEach(row => {
+            const paddedLeft = row.left.padEnd(maxLeftLength, ' ');
+            output += `${paddedLeft}  ${row.name}\n`;
+        });
+
+        output += `\n`;
     });
 
     document.getElementById('output').innerText = output;
@@ -123,16 +132,23 @@ function shareList() {
     }
 }
 
-/* ✅ FORM VALIDATION */
+/* FORM VALIDATION */
 document.addEventListener('input', () => {
     const name = document.getElementById('mealName').value.trim();
     const names = document.querySelectorAll('input[name="ingredient_name[]"]');
     const qtys = document.querySelectorAll('input[name="ingredient_qty[]"]');
+    const units = document.querySelectorAll('select[name="ingredient_unit[]"]');
+    const types = document.querySelectorAll('select[name="ingredient_type[]"]');
 
     let valid = name.length > 0;
 
     names.forEach((n, i) => {
-        if (!n.value.trim() || !qtys[i].value) {
+        if (
+            !n.value.trim() ||
+            !qtys[i].value ||
+            !units[i].value ||
+            !types[i].value
+        ) {
             valid = false;
         }
     });
@@ -150,7 +166,25 @@ document.getElementById('mealForm').addEventListener('submit', () => {
             <div class="ingredient-row">
                 <input name="ingredient_name[]" placeholder="Ingredient" required>
                 <input name="ingredient_qty[]" placeholder="Qty" type="number" step="any" required>
+
+                <select name="ingredient_unit[]" required>
+                    <option value="">Unit</option>
+                    <option value="g">grams</option>
+                    <option value="ml">ml</option>
+                    <option value="item">item</option>
+                    <option value="pack">pack</option>
+                </select>
+
+                <select name="ingredient_type[]" required>
+                    <option value="">Type</option>
+                    <option value="meat">meat</option>
+                    <option value="dairy">dairy</option>
+                    <option value="fruit">fruit</option>
+                    <option value="veg">veg</option>
+                    <option value="other">other</option>
+                </select>
             </div>
         `;
     }, 50);
+});
 });
