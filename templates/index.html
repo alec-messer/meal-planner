@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="apple-touch-icon" href="/static/icon.png">
 </head>
+
 <body>
 
 {% if success %}
@@ -15,12 +16,12 @@
     Meal added successfully!
 </div>
 {% endif %}
-    
-<!-- SIDE PANEL -->
+
+<!-- =========================
+     SIDE PANEL (LEFT)
+========================= -->
 <div id="sidePanel" class="side-panel">
 
-    <button class="panel-handle" onclick="togglePanel()">+</button>
-    
     <div class="panel-content">
 
         <h2>Add Meal</h2>
@@ -32,9 +33,9 @@
             <div id="ingredients-container">
                 <div class="ingredient-row">
                     <input name="ingredient_name[]" placeholder="Ingredient" required>
-                
+
                     <input name="ingredient_qty[]" placeholder="Qty" type="number" step="any" required>
-                
+
                     <select name="ingredient_unit[]" required>
                         <option value="">Unit</option>
                         <option value="g">grams</option>
@@ -42,7 +43,7 @@
                         <option value="item">item</option>
                         <option value="pack">pack</option>
                     </select>
-                
+
                     <select name="ingredient_type[]" required>
                         <option value="">Type</option>
                         <option value="meat">meat</option>
@@ -55,17 +56,16 @@
             </div>
 
             <button type="button" onclick="addIngredient()">+ Add ingredient</button>
-
             <button type="submit" id="submitMeal" disabled>Add meal</button>
 
         </form>
     </div>
 </div>
 
-<!-- RIGHT PANEL -->
+<!-- =========================
+     SIDE PANEL (RIGHT)
+========================= -->
 <div id="deletePanel" class="side-panel right-panel">
-
-    <button class="panel-handle right-handle" onclick="toggleDeletePanel()">−</button>
 
     <div class="panel-content">
 
@@ -86,6 +86,17 @@
 
     </div>
 </div>
+
+<!-- =========================
+     PANEL TOGGLE BUTTONS (FIXED OUTSIDE PANELS)
+========================= -->
+
+<button class="panel-handle" onclick="togglePanel()">+</button>
+<button class="panel-handle right-handle" onclick="toggleDeletePanel()">−</button>
+
+<!-- =========================
+     MAIN APP
+========================= -->
 
 <div class="app">
 
