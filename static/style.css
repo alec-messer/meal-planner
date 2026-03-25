@@ -182,7 +182,7 @@ button {
     white-space: pre-wrap;
 }
 
-#output-card button {
-    align-self: center;
-    width: fit-content;
+.share-button {
+    display: block;
+    margin: 12px auto 0 auto;
 }
