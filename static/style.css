@@ -181,3 +181,14 @@ button {
 
     white-space: pre-wrap;
 }
+
+#output-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#output-card button {
+    align-self: center;
+    width: fit-content;
+}
