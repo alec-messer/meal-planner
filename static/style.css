@@ -111,9 +111,7 @@ button {
 .panel-handle {
     position: fixed;
     bottom: calc(80px + env(safe-area-inset-bottom));
-    left: 0;
-
-    transform: translateX(-50%); /* half outside */
+    left: 20px;
 
     width: 44px;
     height: 44px;
@@ -121,7 +119,6 @@ button {
 
     background: white;
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-    cursor: pointer;
 
     display: flex;
     align-items: center;
@@ -129,17 +126,13 @@ button {
 
     font-size: 22px;
     font-weight: 600;
-    color: black;
-
-    z-index: 2000; /* above panels */
+    z-index: 2000;
 }
 
 .right-handle {
     position: fixed;
     bottom: calc(80px + env(safe-area-inset-bottom));
-    right: 0;
-
-    transform: translateX(50%);
+    right: 20px;
 
     width: 44px;
     height: 44px;
@@ -147,7 +140,6 @@ button {
 
     background: white;
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-    cursor: pointer;
 
     display: flex;
     align-items: center;
@@ -155,8 +147,6 @@ button {
 
     font-size: 22px;
     font-weight: 600;
-    color: black;
-
     z-index: 2000;
 }
 
