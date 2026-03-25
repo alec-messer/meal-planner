@@ -91,7 +91,7 @@ function generateList() {
 
         if (Object.keys(items).length === 0) return;
 
-        output += `${type.toUpperCase()}\n\n`;
+        output += `${type.toUpperCase()}\n`;
 
         // Build rows for alignment
         const rows = Object.keys(items).sort().map(item => {
