@@ -57,7 +57,7 @@ function generateList() {
     // 🧾 BUILD OUTPUT
     let output = `Shopping List\n${dateHeader}\n\n`;
 
-    sorted.forEach(item => {
+    const rows = sorted.map(item => {
         const match = item.match(/^(.*)\s\((.*)\)$/);
     
         let name = item;
@@ -70,11 +70,18 @@ function generateList() {
     
         const qty = totals[item];
     
-        if (unit) {
-            output += `${qty} (${unit}) ${name}\n`;
-        } else {
-            output += `${qty} ${name}\n`;
-        }
+        const left = unit ? `${qty} (${unit})` : `${qty}`;
+    
+        return { name, left };
+    });
+    
+    // Find max width of left column
+    const maxLeftLength = Math.max(...rows.map(r => r.left.length));
+    
+    // Second pass: build output with padding
+    rows.forEach(row => {
+        const paddedLeft = row.left.padEnd(maxLeftLength, ' ');
+        output += `${paddedLeft}  ${row.name}\n`;
     });
 
     document.getElementById('output').innerText = output;
