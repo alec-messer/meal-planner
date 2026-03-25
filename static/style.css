@@ -152,7 +152,7 @@ button {
 }
 
 /* =========================
-   PANEL BUTTONS (UPDATED)
+   PANEL BUTTONS
 ========================= */
 
 .panel-handle {
@@ -200,10 +200,22 @@ button {
 }
 
 /* =========================
-   OPTIONAL DELETE BUTTON STYLE
+   SHOPPING LIST OUTPUT (UPGRADED)
 ========================= */
 
-.delete-btn {
-    background: #ef4444;
-    color: white;
+#output {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+
+    background: #fafafa;
+    padding: 16px;
+    border-radius: 12px;
+
+    white-space: pre-wrap;
+}
+
+/* Bold section headers (MEAT, VEG, etc.) */
+#output::first-line {
+    font-weight: 600;
 }
