@@ -185,7 +185,7 @@ button {
 }
 
 /* =========================
-   FIX: INGREDIENT ROW LAYOUT
+   INGREDIENT ROW (FIXED)
 ========================= */
 
 .ingredient-row {
@@ -194,7 +194,6 @@ button {
     align-items: center;
 }
 
-/* override global 100% width rule inside ingredient rows */
 .ingredient-row input,
 .ingredient-row select {
     width: auto;
@@ -202,14 +201,18 @@ button {
     min-width: 0;
 }
 
-/* optional sizing refinement */
+/* 🔧 Adjusted sizing to fix "Type" cutoff */
 .ingredient-row input[name="ingredient_name[]"] {
-    flex: 2;
+    flex: 1.6;  /* reduced from 2 */
 }
 
 .ingredient-row input[name="ingredient_qty[]"] {
-    flex: 1;
-    max-width: 90px;
+    flex: 0.8;
+    max-width: 80px;
+}
+
+.ingredient-row select {
+    flex: 1.1;  /* slightly more space for dropdown text */
 }
 
 .share-button {
