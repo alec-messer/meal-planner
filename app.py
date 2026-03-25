@@ -56,15 +56,26 @@ def add_meal():
 
     ingredient_names = request.form.getlist('ingredient_name[]')
     ingredient_qtys = request.form.getlist('ingredient_qty[]')
-
+    ingredient_units = request.form.getlist('ingredient_unit[]')
+    ingredient_types = request.form.getlist('ingredient_type[]')
+    
     ingredients = {}
-
+    
     for i in range(len(ingredient_names)):
         n = ingredient_names[i].strip()
         q = ingredient_qtys[i]
-
-        if n and q:
-            ingredients[n] = float(q)
+        u = ingredient_units[i]
+        t = ingredient_types[i]
+    
+        if n and q and u and t:
+            try:
+                ingredients[n] = {
+                    "qty": float(q),
+                    "unit": u,
+                    "type": t
+                }
+            except ValueError:
+                continue
 
     conn = get_db()
     cur = conn.cursor()
