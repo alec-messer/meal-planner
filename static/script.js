@@ -16,6 +16,23 @@ function addIngredient() {
     row.innerHTML = `
         <input name="ingredient_name[]" placeholder="Ingredient" required>
         <input name="ingredient_qty[]" placeholder="Qty" type="number" step="any" required>
+
+        <select name="ingredient_unit[]" required>
+            <option value="">Unit</option>
+            <option value="g">grams</option>
+            <option value="ml">ml</option>
+            <option value="item">item</option>
+            <option value="pack">pack</option>
+        </select>
+
+        <select name="ingredient_type[]" required>
+            <option value="">Type</option>
+            <option value="meat">meat</option>
+            <option value="dairy">dairy</option>
+            <option value="fruit">fruit</option>
+            <option value="veg">veg</option>
+            <option value="other">other</option>
+        </select>
     `;
 
     container.appendChild(row);
