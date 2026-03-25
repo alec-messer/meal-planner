@@ -72,14 +72,12 @@ button {
 
 .meal-select {
     width: 100%;
-    min-width: 0;
 }
 
 /* =========================
    INGREDIENT ROWS
 ========================= */
 
-.row,
 .ingredient-row {
     display: flex;
     gap: 8px;
@@ -87,7 +85,7 @@ button {
 }
 
 /* =========================
-   SUCCESS MESSAGE
+   SUCCESS BANNER
 ========================= */
 
 .success-banner {
@@ -100,17 +98,10 @@ button {
     border-radius: 10px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     z-index: 3000;
-    animation: fadeOut 3s forwards;
-}
-
-@keyframes fadeOut {
-    0% { opacity: 1; }
-    70% { opacity: 1; }
-    100% { opacity: 0; transform: translateY(-10px); }
 }
 
 /* =========================
-   SIDE PANEL BASE
+   SIDE PANELS
 ========================= */
 
 .side-panel {
@@ -125,10 +116,7 @@ button {
     padding: 20px;
 }
 
-/* =========================
-   LEFT PANEL
-========================= */
-
+/* LEFT PANEL */
 #sidePanel {
     left: 0;
     transform: translateX(-110%);
@@ -138,10 +126,7 @@ button {
     transform: translateX(0);
 }
 
-/* =========================
-   RIGHT PANEL
-========================= */
-
+/* RIGHT PANEL */
 #deletePanel {
     right: 0;
     transform: translateX(110%);
@@ -152,63 +137,60 @@ button {
 }
 
 /* =========================
-   PANEL BUTTONS
+   TOGGLE BUTTONS (FIXED POSITION)
 ========================= */
 
 .panel-handle {
     position: fixed;
-    bottom: calc(80px + env(safe-area-inset-bottom));
-    left: 0;
+    bottom: calc(20px + env(safe-area-inset-bottom));
+    left: 20px;
 
-    transform: translateX(-50%); /* half outside */
+    width: 56px;
+    height: 56px;
 
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
+    border-radius: 14px;
 
     background: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-    cursor: pointer;
+    color: black;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 600;
-    color: black;
 
-    z-index: 2000; /* above panels */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    z-index: 9999;
 }
 
+/* RIGHT TOGGLE BUTTON */
 .right-handle {
     position: fixed;
-    bottom: calc(80px + env(safe-area-inset-bottom));
-    right: 0;
+    bottom: calc(20px + env(safe-area-inset-bottom));
+    right: 20px;
 
-    transform: translateX(50%);
+    width: 56px;
+    height: 56px;
 
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
+    border-radius: 14px;
 
     background: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-    cursor: pointer;
+    color: black;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 600;
-    color: black;
 
-    z-index: 2000;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    z-index: 9999;
 }
 
 /* =========================
-   SHOPPING LIST OUTPUT (UPGRADED)
+   SHOPPING LIST OUTPUT
 ========================= */
 
 #output {
@@ -221,9 +203,4 @@ button {
     border-radius: 12px;
 
     white-space: pre-wrap;
-}
-
-/* Bold section headers (MEAT, VEG, etc.) */
-#output::first-line {
-    font-weight: 600;
 }
