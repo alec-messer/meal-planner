@@ -110,44 +110,46 @@ button {
 
 .panel-handle {
     position: fixed;
-    bottom: calc(80px + env(safe-area-inset-bottom));
     left: 20px;
+    bottom: 20px;
 
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
+    width: 56px;
+    height: 56px;
 
+    border-radius: 14px;
     background: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 600;
-    z-index: 2000;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    z-index: 9999;
 }
 
 .right-handle {
     position: fixed;
-    bottom: calc(80px + env(safe-area-inset-bottom));
     right: 20px;
+    bottom: 20px;
 
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
+    width: 56px;
+    height: 56px;
 
+    border-radius: 14px;
     background: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 600;
-    z-index: 2000;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    z-index: 9999;
 }
 
 /* =========================
