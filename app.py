@@ -47,7 +47,10 @@ def index():
     conn.close()
 
     meals = {name: ingredients for name, ingredients in rows}
-    return render_template('index.html', meals=meals)
+
+    success = request.args.get('success')
+
+    return render_template('index.html', meals=meals, success=success)
 
 
 @app.route('/add_meal', methods=['POST'])
