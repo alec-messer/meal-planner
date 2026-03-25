@@ -19,7 +19,7 @@
 <!-- SIDE PANEL -->
 <div id="sidePanel" class="side-panel">
 
-    <button class="panel-handle" onclick="togglePanel()">☰</button>
+    <button class="panel-handle" onclick="togglePanel()">+</button>
     
     <div class="panel-content">
 
@@ -62,10 +62,10 @@
     </div>
 </div>
 
-<!-- RIGHT PANEL (DELETE MEAL) -->
+<!-- RIGHT PANEL -->
 <div id="deletePanel" class="side-panel right-panel">
 
-    <button class="panel-handle right-handle" onclick="toggleDeletePanel()">☰</button>
+    <button class="panel-handle right-handle" onclick="toggleDeletePanel()">−</button>
 
     <div class="panel-content">
 
@@ -91,9 +91,7 @@
 
     <h1>Meal Planner</h1>
 
-    <!-- PLANNER -->
     <div class="card">
-
         <div class="week-vertical">
             {% for day in ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] %}
             <div class="day">
@@ -112,10 +110,8 @@
         <button onclick="generateList()">Generate Shopping List</button>
     </div>
 
-    <!-- OUTPUT -->
     <div class="card hidden" id="output-card">
         <pre id="output"></pre>
-
         <button onclick="shareList()">Share</button>
     </div>
 
