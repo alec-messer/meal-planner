@@ -187,4 +187,3 @@ document.getElementById('mealForm').addEventListener('submit', () => {
         `;
     }, 50);
 });
-});
