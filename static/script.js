@@ -58,7 +58,23 @@ function generateList() {
     let output = `Shopping List\n${dateHeader}\n\n`;
 
     sorted.forEach(item => {
-        output += `${item}: ${totals[item]}\n`;
+        const match = item.match(/^(.*)\s\((.*)\)$/);
+    
+        let name = item;
+        let unit = '';
+    
+        if (match) {
+            name = match[1];
+            unit = match[2];
+        }
+    
+        const qty = totals[item];
+    
+        if (unit) {
+            output += `${qty} (${unit}) ${name}\n`;
+        } else {
+            output += `${qty} ${name}\n`;
+        }
     });
 
     document.getElementById('output').innerText = output;
