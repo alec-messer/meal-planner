@@ -38,6 +38,28 @@ function addIngredient() {
     container.appendChild(row);
 }
 
+function buildShoppingJSON(totals) {
+    const items = [];
+
+    Object.keys(totals).forEach(type => {
+        Object.keys(totals[type]).forEach(name => {
+            const { qty, unit } = totals[type][name];
+
+            items.push({
+                name,
+                qty,
+                unit,
+                type
+            });
+        });
+    });
+
+    return {
+        date: new Date().toISOString().split('T')[0],
+        items
+    };
+}
+
 function generateList() {
     const selects = document.querySelectorAll('.meal-select');
 
@@ -71,6 +93,8 @@ function generateList() {
             });
         }
     });
+
+    const shoppingJSON = buildShoppingJSON(totals);
 
     // 📅 DATE
     const now = new Date();
