@@ -194,8 +194,8 @@ products = {
         {
             'id': 'bacon',
             'search': 'Waitrose 12 Made Without Nitrite Smoked Streaky Bacon Rashers',
-            'size': 250,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 4
         }
     ],
@@ -212,8 +212,8 @@ products = {
         {
             'id': 'chorizo',
             'search': 'Waitrose Spanish Hot & Spicy Chorizo Ring',
-            'size': 225,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 3.75
         }
     ],
@@ -222,8 +222,8 @@ products = {
         {
             'id': 'broccoli',
             'search': 'Essential Broccoli',
-            'size': 400,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 0.96
         }
     ],
@@ -231,8 +231,8 @@ products = {
         {
             'id': 'carrot',
             'search': 'Essential British Loose Carrots',
-            'size': 140,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 0.1
         }
     ],
@@ -240,8 +240,8 @@ products = {
         {
             'id': 'onion',
             'search': 'Essential Onions',
-            'size': 150,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 0.16
         }
     ],
@@ -249,8 +249,8 @@ products = {
         {
             'id': 'celery',
             'search': 'Essential Green Celery',
-            'size': 375,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 0.9
         }
     ],
@@ -258,8 +258,8 @@ products = {
         {
             'id': 'bell_pepper',
             'search': 'Waitrose Red Peppers',
-            'size': 160,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 0.72
         }
     ],
@@ -267,8 +267,8 @@ products = {
         {
             'id': 'potatoes',
             'search': 'Waitrose Maris Piper Potatoes',
-            'size': 2000,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 2.2
         }
     ],
@@ -276,8 +276,8 @@ products = {
         {
             'id': 'peas',
             'search': 'Essential Frozen British Garden Peas',
-            'size': 725,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 1.25
         }
     ],
@@ -286,8 +286,8 @@ products = {
         {
             'id': 'pasta',
             'search': 'No.1 Italian Mafaldine Pasta',
-            'size': 500,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 3
         }
     ],
@@ -295,8 +295,8 @@ products = {
         {
             'id': 'birria_paste',
             'search': 'Waitrose Birria Paste',
-            'size': 90,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 2
         }
     ],
@@ -304,8 +304,8 @@ products = {
         {
             'id': 'spag_bol_paste',
             'search': 'Jamie Oliver Brilliant Bolognese Paste',
-            'size': 180,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 2.5
         }
     ],
@@ -313,8 +313,8 @@ products = {
         {
             'id': 'tortilla',
             'search': 'Gran Luchito 10 Mexican Soft Taco Wraps',
-            'size': 300,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 2.2
         }
     ],
@@ -363,8 +363,8 @@ products = {
         {
             'id': 'eggs_large',
             'search': 'Waitrose FR Mixed Size Eggs British Blacktail',
-            'size': 700,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 3.4
         }
     ],
@@ -372,8 +372,8 @@ products = {
         {
             'id': 'microwave_rice',
             'search': 'Veetee Steam Filtered Sticky Rice',
-            'size': 260,
-            'unit': 'grams',
+            'size': 1,
+            'unit': 'items',
             'price': 1.2
         }
     ]
