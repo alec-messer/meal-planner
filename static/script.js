@@ -195,9 +195,7 @@ document.getElementById('mealForm').addEventListener('submit', () => {
                 <select name="ingredient_unit[]" required>
                     <option value="">Unit</option>
                     <option value="g">grams</option>
-                    <option value="ml">ml</option>
                     <option value="item">item</option>
-                    <option value="pack">pack</option>
                 </select>
 
                 <select name="ingredient_type[]" required>
