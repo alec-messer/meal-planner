@@ -378,3 +378,97 @@ products = {
         }
     ]
 }
+
+def optimise_grams(required_grams, options):
+    """
+    options: list of dicts with keys:
+        id, search, size (grams), unit, price
+    """
+
+    max_pack = max(o['size'] for o in options)
+    max_grams = required_grams + max_pack
+
+    # dp[g] = (cost, combo_dict)
+    dp = [None] * (max_grams + 1)
+    dp[0] = (0, {})
+
+    for g in range(1, max_grams + 1):
+        best = None
+
+        for opt in options:
+            size = opt['size']
+
+            if g - size >= 0 and dp[g - size] is not None:
+                prev_cost, prev_combo = dp[g - size]
+
+                new_cost = prev_cost + opt['price']
+                new_combo = prev_combo.copy()
+                new_combo[opt['id']] = new_combo.get(opt['id'], 0) + 1
+
+                if best is None or new_cost < best[0]:
+                    best = (new_cost, new_combo)
+
+        dp[g] = best
+
+    # find cheapest solution where grams >= required
+    best_solution = None
+
+    for g in range(required_grams, max_grams + 1):
+        if dp[g] is not None:
+            if best_solution is None or dp[g][0] < best_solution[0]:
+                best_solution = dp[g]
+
+    return best_solution
+
+def build_basket(shopping_list, products):
+    """
+    shopping_list: [
+        { 'key': str, 'qty': int, 'unit': 'grams' | 'items' }
+    ]
+
+    products: your full product dict
+    """
+
+    basket = []
+
+    for item in shopping_list:
+        key = item['key']
+        qty = item['qty']
+        unit = item['unit']
+
+        if key not in products:
+            continue
+
+        options = products[key]
+
+        # --- ITEMS ---
+        if unit == 'items':
+            opt = options[0]  # assume single option
+
+            basket.append({
+                'id': opt['id'],
+                'search': opt['search'],
+                'quantity': qty,
+                'total_price': round(qty * opt['price'], 2)
+            })
+
+        # --- GRAMS ---
+        elif unit == 'grams':
+            result = optimise_grams(qty, options)
+
+            if result is None:
+                continue
+
+            total_cost, combo = result
+
+            for opt_id, count in combo.items():
+                opt = next(o for o in options if o['id'] == opt_id)
+
+                basket.append({
+                    'id': opt['id'],
+                    'search': opt['search'],
+                    'quantity': count,
+                    'total_price': round(count * opt['price'], 2)
+                })
+
+    return basket
