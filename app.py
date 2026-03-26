@@ -141,241 +141,240 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 products = {
-
-    # ===== MEAT (optimise) =====
-    'chicken_breast': {
-        'mode': 'optimise',
-        'options': [
-            {
-                'id': 'chicken_small',
-                'search': 'Waitrose Slower Reared 2 Chicken Breast Fillets',
-                'size': 380,
-                'price': 4.75
-            },
-            {
-                'id': 'chicken_large',
-                'search': 'Waitrose Slower Reared Chicken Breast Fillets',
-                'size': 600,
-                'price': 5.5
-            },
-            {
-                'id': 'chicken_xl',
-                'search': 'Waitrose Slower Reared Chicken Breast Fillets XL Pack',
-                'size': 1200,
-                'price': 9.5
-            }
-        ]
-    },
-
-    'beef_mince': {
-        'mode': 'optimise',
-        'options': [
-            {
-                'id': 'mince_500g',
-                'search': 'Waitrose British Beef Mince 12% Fat 500g',
-                'size': 500,
-                'price': 4.50
-            },
-            {
-                'id': 'mince_750g',
-                'search': 'Waitrose British Beef Mince 15% Fat 750g',
-                'size': 750,
-                'price': 7.00
-            }
-        ]
-    },
-
-    'diced_beef': {
-        'mode': 'optimise',
-        'options': [
-            {
-                'id': 'diced_beef',
-                'search': 'Essential British Beef Diced Braising Steak',
-                'size': 400,
-                'price': 4.5
-            }
-        ]
-    },
-
-    # ===== VEGETABLES (direct) =====
-    'broccoli': {
-        'mode': 'direct',
-        'options': [
-            {
-                'id': 'broccoli',
-                'search': 'Essential Broccoli'
-            }
-        ]
-    },
-
-    'carrot': {
-        'mode': 'direct',
-        'options': [
-            {
-                'id': 'carrot',
-                'search': 'Essential British Loose Carrots'
-            }
-        ]
-    },
-
-    'onion': {
-        'mode': 'direct',
-        'options': [
-            {
-                'id': 'onion',
-                'search': 'Essential Onions'
-            }
-        ]
-    },
-
-    'celery': {
-        'mode': 'direct',
-        'options': [
-            {
-                'id': 'celery',
-                'search': 'Essential Green Celery'
-            }
-        ]
-    },
-
-    # ===== OTHER =====
-    'pasta': {
-        'mode': 'optimise',
-        'options': [
-            {
-                'id': 'pasta',
-                'search': 'No.1 Italian Mafaldine Pasta 500g',
-                'size': 500,
-                'price': 3
-            }
-        ]
-    },
-
-    'tortilla': {
-        'mode': 'direct',
-        'options': [
-            {
-                'id': 'tortilla',
-                'search': 'Gran Luchito 10 Soft Taco Wraps'
-            }
-        ]
-    },
-
-    'chopped_tomatoes': {
-        'mode': 'optimise',
-        'options': [
-            {
-                'id': 'tomatoes_400g',
-                'search': 'Waitrose Finely Chopped Tomatoes 400g',
-                'size': 400,
-                'price': 0.95
-            },
-            {
-                'id': 'tomatoes_1600g',
-                'search': 'Essential Chopped Tomatoes 1600g',
-                'size': 1600,
-                'price': 2.4
-            }
-        ]
-    },
-
-    'cheddar': {
-        'mode': 'optimise',
-        'options': [
-            {
-                'id': 'cheddar_350g',
-                'search': 'Cathedral City Mature Cheddar 350g',
-                'size': 350,
-                'price': 4.25
-            },
-            {
-                'id': 'cheddar_550g',
-                'search': 'Cathedral City Mature Cheddar 550g',
-                'size': 550,
-                'price': 4.6
-            }
-        ]
-    }
+    # MEAT ################################
+    'Chicken Breast': [
+        {
+            'id': 'chicken_small',
+            'search': 'Waitrose Slower Reared 2 Chicken Breast Fillets',
+            'size': 380,
+            'unit': 'grams',
+            'price': 4.75
+        },
+        {
+            'id': 'chicken_large',
+            'search': 'Waitrose Slower Reared Chicken Breast Fillets',
+            'size': 600,
+            'unit': 'grams',
+            'price': 5.5
+        },
+        {
+            'id': 'chicken_extra_large',
+            'search': 'Waitrose Slower Reared Chicken Breast Fillets - XL Pack',
+            'size': 1200,
+            'unit': 'grams',
+            'price': 9.5
+        }
+    ],
+    'Beef Mince': [
+        {
+            'id': 'beef_mince_small',
+            'search': 'Waitrose British Native Breed Beef Mince 12% Fat',
+            'size': 500,
+            'unit': 'grams',
+            'price': 4.50
+        },
+        {
+            'id': 'beef_mince_large',
+            'search': 'Waitrose British Native Breeds Beef Mince 15%',
+            'size': 750,
+            'unit': 'grams',
+            'price': 7
+        }
+    ],
+    'Diced Beef': [
+        {
+            'id': 'diced_beef',
+            'search': 'Essential British Beef Diced Braising Steak',
+            'size': 400,
+            'unit': 'grams',
+            'price': 4.5
+        }
+    ],
+    'Bacon': [
+        {
+            'id': 'bacon',
+            'search': 'Waitrose 12 Made Without Nitrite Smoked Streaky Bacon Rashers',
+            'size': 250,
+            'unit': 'grams',
+            'price': 4
+        }
+    ],
+    'Sausages': [
+        {
+            'id': 'sausages',
+            'search': 'Waitrose 6 Cumberland Pork Sausages',
+            'size': 400,
+            'unit': 'grams',
+            'price': 4
+        }
+    ],
+    'Chorizo': [
+        {
+            'id': 'chorizo',
+            'search': 'Waitrose Spanish Hot & Spicy Chorizo Ring',
+            'size': 225,
+            'unit': 'grams',
+            'price': 3.75
+        }
+    ],
+    # VEGETABLES ################################
+    'Broccoli': [
+        {
+            'id': 'broccoli',
+            'search': 'Essential Broccoli',
+            'size': 400,
+            'unit': 'grams',
+            'price': 0.96
+        }
+    ],
+    'Carrot': [
+        {
+            'id': 'carrot',
+            'search': 'Essential British Loose Carrots',
+            'size': 140,
+            'unit': 'grams',
+            'price': 0.1
+        }
+    ],
+    'Onion': [
+        {
+            'id': 'onion',
+            'search': 'Essential Onions',
+            'size': 150,
+            'unit': 'grams',
+            'price': 0.16
+        }
+    ],
+    'Celery': [
+        {
+            'id': 'celery',
+            'search': 'Essential Green Celery',
+            'size': 375,
+            'unit': 'grams',
+            'price': 0.9
+        }
+    ],
+    'Pepper': [
+        {
+            'id': 'bell_pepper',
+            'search': 'Waitrose Red Peppers',
+            'size': 160,
+            'unit': 'grams',
+            'price': 0.72
+        }
+    ],
+    'Potatoes': [
+        {
+            'id': 'potatoes',
+            'search': 'Waitrose Maris Piper Potatoes',
+            'size': 2000,
+            'unit': 'grams',
+            'price': 2.2
+        }
+    ],
+    'Peas': [
+        {
+            'id': 'peas',
+            'search': 'Essential Frozen British Garden Peas',
+            'size': 725,
+            'unit': 'grams',
+            'price': 1.25
+        }
+    ],
+    # OTHER ################################
+    'Pasta': [
+        {
+            'id': 'pasta',
+            'search': 'No.1 Italian Mafaldine Pasta',
+            'size': 500,
+            'unit': 'grams',
+            'price': 3
+        }
+    ],
+    'Birria Paste': [
+        {
+            'id': 'birria_paste',
+            'search': 'Waitrose Birria Paste',
+            'size': 90,
+            'unit': 'grams',
+            'price': 2
+        }
+    ],
+    'Spag Bol Seasoning': [
+        {
+            'id': 'spag_bol_paste',
+            'search': 'Jamie Oliver Brilliant Bolognese Paste',
+            'size': 180,
+            'unit': 'grams',
+            'price': 2.5
+        }
+    ],
+    'Tortilla': [
+        {
+            'id': 'tortilla',
+            'search': 'Gran Luchito 10 Mexican Soft Taco Wraps',
+            'size': 300,
+            'unit': 'grams',
+            'price': 2.2
+        }
+    ],
+    'Chopped Tomatoes': [
+        {
+            'id': 'chopped_tomatoes_small',
+            'search': 'Waitrose Finely Chopped Italian Tomatoes',
+            'size': 400,
+            'unit': 'grams',
+            'price': 0.95
+        },
+        {
+            'id': 'chopped_tomatoes_large',
+            'search': 'Essential Chopped Tomatoes in Natural Juice',
+            'size': 1600,
+            'unit': 'grams',
+            'price': 2.4
+        }
+    ],
+    'Cheddar': [
+        {
+            'id': 'cheddar_small',
+            'search': 'Cathedral City Mature Cheddar Cheese',
+            'size': 350,
+            'unit': 'grams',
+            'price': 4.25
+        },
+        {
+            'id': 'cheddar_large',
+            'search': 'Cathedral City Mature Cheddar Cheese Large',
+            'size': 550,
+            'unit': 'grams',
+            'price': 4.6
+        }
+    ],
+    'Parmesan': [
+        {
+            'id': 'parmesan',
+            'search': 'Waitrose Grana Padano DOP Cheese Strength 4',
+            'size': 175,
+            'unit': 'grams',
+            'price': 3.3
+        }
+    ],
+    'Eggs': [
+        {
+            'id': 'eggs_large',
+            'search': 'Waitrose FR Mixed Size Eggs British Blacktail',
+            'size': 700,
+            'unit': 'grams',
+            'price': 3.4
+        }
+    ],
+    'Microwave Rice': [
+        {
+            'id': 'microwave_rice',
+            'search': 'Veetee Steam Filtered Sticky Rice',
+            'size': 260,
+            'unit': 'grams',
+            'price': 1.2
+        }
+    ]
 }
-
-import math
-import itertools
-
-def optimise_ingredient(required, options):
-    min_size = min(opt['size'] for opt in options)
-    max_units = math.ceil(required / min_size) + 2
-
-    best = None
-
-    for counts in itertools.product(range(max_units), repeat=len(options)):
-        total_size = sum(c * opt['size'] for c, opt in zip(counts, options))
-        total_price = sum(c * opt['price'] for c, opt in zip(counts, options))
-
-        if total_size >= required and total_size > 0:
-            if (
-                best is None or
-                total_price < best['price'] or
-                (total_price == best['price'] and total_size < best['size'])
-            ):
-                best = {
-                    'counts': counts,
-                    'price': total_price,
-                    'size': total_size
-                }
-
-    result = []
-
-    for count, opt in zip(best['counts'], options):
-        if count > 0:
-            result.append({
-                'id': opt['id'],
-                'search': opt['search'],
-                'quantity': count
-            })
-
-    return result
-
-def resolve_ingredient(name, qty, unit, config):
-    mode = config['mode']
-    options = config['options']
-
-    # ===== DIRECT MODE =====
-    if mode == 'direct':
-        opt = options[0]
-
-        return [{
-            'id': opt['id'],
-            'search': opt['search'],
-            'quantity': qty
-        }]
-
-    # ===== OPTIMISE MODE =====
-    elif mode == 'optimise':
-        if unit != 'grams':
-            raise ValueError(f"{name} requires grams but got {unit}")
-
-        return optimise_ingredient(qty, options)
-
-def build_basket(shopping_list, products):
-    basket = []
-    unresolved = []
-
-    for item in shopping_list:
-        key = item['key']          # canonical key
-        qty = item['qty']
-        unit = item['unit']
-
-        if key not in products:
-            unresolved.append(item)
-            continue
-
-        try:
-            result = resolve_ingredient(key, qty, unit, products[key])
-            basket.extend(result)
-        except Exception:
-            unresolved.append(item)
-
-    return {
-        'basket': basket,
-        'unresolved': unresolved
-    }
