@@ -20,7 +20,7 @@ function addIngredient() {
         <select name="ingredient_unit[]" required>
             <option value="">Unit</option>
             <option value="g">grams</option>
-            <option value="item">item</option>
+            <option value="item">items</option>
         </select>
 
         <select name="ingredient_type[]" required>
@@ -195,7 +195,7 @@ document.getElementById('mealForm').addEventListener('submit', () => {
                 <select name="ingredient_unit[]" required>
                     <option value="">Unit</option>
                     <option value="g">grams</option>
-                    <option value="item">item</option>
+                    <option value="item">items</option>
                 </select>
 
                 <select name="ingredient_type[]" required>
