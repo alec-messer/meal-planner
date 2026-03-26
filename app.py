@@ -1,7 +1,7 @@
 import os
 import json
 import psycopg2
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 
 def get_db():
     try:
@@ -135,6 +135,22 @@ def delete_meal():
         conn.close()
 
     return redirect('/')
+
+@app.route('/build_basket', methods=['POST'])
+def build_basket_api():
+    try:
+        shopping_list = request.get_json()
+
+        if not shopping_list:
+            return jsonify({'error': 'No data provided'}), 400
+
+        basket = build_basket(shopping_list, products)
+
+        return jsonify({'basket': basket})
+
+    except Exception as e:
+        print('API ERROR:', e)
+        return jsonify({'error': 'Internal server error'}), 500
 
 if __name__ == '__main__':
     init_db()
