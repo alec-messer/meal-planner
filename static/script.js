@@ -45,19 +45,22 @@ function buildShoppingJSON(totals) {
         Object.keys(totals[type]).forEach(name => {
             const { qty, unit } = totals[type][name];
 
+            const key = NAME_TO_KEY[name];
+
+            if (!key) {
+                console.warn('No key mapping for:', name);
+                return;
+            }
+
             items.push({
-                name,
+                key,
                 qty,
-                unit,
-                type
+                unit
             });
         });
     });
 
-    return {
-        date: new Date().toISOString().split('T')[0],
-        items
-    };
+    return items; // ← return array directly (matches Python)
 }
 
 function generateList() {
