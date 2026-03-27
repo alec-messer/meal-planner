@@ -54,6 +54,16 @@ function buildShoppingJSON(totals) {
     return items; // ← return array directly (matches Python)
 }
 
+function appendBasketToOutput(basket) {
+    let text = '\nOPTIMISED BASKET\n\n';
+
+    basket.forEach(item => {
+        text += `${item.quantity} x ${item.search} (£${item.total_price})\n`;
+    });
+
+    document.getElementById('output').innerText += text;
+}
+
 function generateList() {
     const selects = document.querySelectorAll('.meal-select');
 
@@ -89,6 +99,24 @@ function generateList() {
     });
 
     const shoppingJSON = buildShoppingJSON(totals);
+
+    fetch('/build_basket', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shoppingJSON)
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log('Optimised basket:', data.basket);
+    
+        // Optional: append to output
+        appendBasketToOutput(data.basket);
+    })
+    .catch(err => {
+        console.error('API error:', err);
+    });
 
     // 📅 DATE
     const now = new Date();
