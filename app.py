@@ -150,7 +150,7 @@ def build_basket_api():
 
     except Exception as e:
         print('API ERROR:', e)
-        return jsonify({'error': 'Internal server error'}), 500
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     init_db()
