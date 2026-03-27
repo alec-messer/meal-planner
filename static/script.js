@@ -43,15 +43,8 @@ function buildShoppingJSON(totals) {
         Object.keys(totals[type]).forEach(name => {
             const { qty, unit } = totals[type][name];
 
-            const key = NAME_TO_KEY[name];
-
-            if (!key) {
-                console.warn('No key mapping for:', name);
-                return;
-            }
-
             items.push({
-                key,
+                name,
                 qty,
                 unit
             });
