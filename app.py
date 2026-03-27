@@ -448,7 +448,7 @@ def build_basket(shopping_list, products):
     basket = []
 
     for item in shopping_list:
-        key = item['key']
+        key = item['name']
         qty = item['qty']
         unit = item['unit']
 
