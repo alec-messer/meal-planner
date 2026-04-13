@@ -219,3 +219,25 @@ button {
     display: block;
     margin: 12px auto 0 auto;
 }
+
+.success-banner {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    background: #28a745; /* green */
+    color: white;
+
+    padding: 12px 20px;
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    z-index: 9999;
+
+    opacity: 0;
+    animation: fadeInOut 4s ease forwards;
+}
