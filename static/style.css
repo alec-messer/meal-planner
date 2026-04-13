@@ -242,6 +242,10 @@ button {
     animation: fadeOut 4s ease forwards;
 }
 
+.delete-banner {
+    background: #dc3545; /* red */
+}
+
 @keyframes fadeOut {
     0%   { opacity: 1; transform: translate(-50%, 0); }
     80%  { opacity: 1; }
