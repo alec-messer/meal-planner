@@ -1,52 +1,28 @@
 import os
 import json
-import psycopg2
+import firebase_admin
+from firebase_admin import credentials, firestore
 from flask import Flask, render_template, request, redirect, jsonify
 
-def get_db():
-    try:
-        print("Connecting to DB...")
-        return psycopg2.connect(
-            os.environ['DATABASE_URL'],
-            sslmode='require'
-        )
-    except Exception as e:
-        print("DB ERROR:", e)
-        raise
+
+def init_firestore():
+    if not firebase_admin._apps:
+        cred_json = json.loads(os.environ['GOOGLE_APPLICATION_CREDENTIALS_JSON'])
+        cred = credentials.Certificate(cred_json)
+        firebase_admin.initialize_app(cred)
+
+    return firestore.client()
 
 
-def init_db():
-    conn = get_db()
-    cur = conn.cursor()
-
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS meals (
-            id SERIAL PRIMARY KEY,
-            name TEXT UNIQUE NOT NULL,
-            ingredients JSONB NOT NULL
-        );
-    """)
-
-    conn.commit()
-    cur.close()
-    conn.close()
+db = init_firestore()
 
 app = Flask(__name__)
 
-init_db()
 
 @app.route('/')
 def index():
-    conn = get_db()
-    cur = conn.cursor()
-
-    cur.execute("SELECT name, ingredients FROM meals")
-    rows = cur.fetchall()
-
-    cur.close()
-    conn.close()
-
-    meals = {name: ingredients for name, ingredients in rows}
+    docs = db.collection('meals').stream()
+    meals = {doc.id: doc.to_dict()['ingredients'] for doc in docs}
 
     success = request.args.get('success')
 
@@ -80,61 +56,32 @@ def add_meal():
             except ValueError:
                 continue
 
-    conn = get_db()
-    cur = conn.cursor()
+    # Firestore write (replaces INSERT + ON CONFLICT DO NOTHING)
+    doc_ref = db.collection('meals').document(name)
+    if not doc_ref.get().exists:
+        doc_ref.set({
+            'ingredients': ingredients
+        })
 
-    cur.execute(
-        """
-        INSERT INTO meals (name, ingredients)
-        VALUES (%s, %s)
-        ON CONFLICT (name) DO NOTHING
-        """,
-        (name, json.dumps(ingredients))
-    )
+    # reload meals (same logic preserved)
+    docs = db.collection('meals').stream()
+    meals = {doc.id: doc.to_dict()['ingredients'] for doc in docs}
 
-    conn.commit()
-    cur.close()
-    conn.close()
-
-    # ✅ RELOAD meals here (this fixes your error)
-    conn = get_db()
-    cur = conn.cursor()
-
-    cur.execute("SELECT name, ingredients FROM meals")
-    rows = cur.fetchall()
-
-    cur.close()
-    conn.close()
-
-    meals = {name: ingredients for name, ingredients in rows}
-
-    # return render_template('index.html', meals=meals, success=True)
     return redirect('/?success=1')
+
 
 @app.route('/delete_meal', methods=['POST'])
 def delete_meal():
     name = request.form['name']
 
-    conn = get_db()
-    cur = conn.cursor()
-
     try:
-        cur.execute(
-            "DELETE FROM meals WHERE name = %s",
-            (name,)
-        )
-        conn.commit()
-
+        db.collection('meals').document(name).delete()
     except Exception as e:
-        conn.rollback()
         print("DELETE ERROR:", e)
         return "Error deleting meal", 500
 
-    finally:
-        cur.close()
-        conn.close()
-
     return redirect('/')
+
 
 @app.route('/build_basket', methods=['POST'])
 def build_basket_api():
@@ -152,9 +99,9 @@ def build_basket_api():
         print('API ERROR:', e)
         return jsonify({'error': str(e)}), 500
 
+
 if __name__ == '__main__':
-    init_db()
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
 products = {
     # MEAT ################################
