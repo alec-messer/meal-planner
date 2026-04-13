@@ -231,3 +231,10 @@ document.getElementById('mealForm').addEventListener('submit', () => {
         `;
     }, 50);
 });
+
+const banner = document.getElementById('successBanner');
+if (banner) {
+    setTimeout(() => {
+        banner.remove();
+    }, 4000);
+}
