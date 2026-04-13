@@ -80,7 +80,7 @@ def delete_meal():
         print("DELETE ERROR:", e)
         return "Error deleting meal", 500
 
-    return redirect('/')
+    return redirect('/?deleted=1')
 
 
 @app.route('/build_basket', methods=['POST'])
