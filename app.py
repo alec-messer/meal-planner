@@ -471,7 +471,7 @@ def run_playwright(basket):
     def safe_goto(page, url):
         for attempt in range(3):
             try:
-                page.goto(url, wait_until='domcontentloaded', timeout=60000)
+                page.goto(url, wait_until='load')
                 return
             except Exception as e:
                 print(f"GOTO RETRY {attempt+1}:", e)
