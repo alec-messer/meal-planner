@@ -515,7 +515,7 @@ def run_playwright(basket):
         page = context.new_page()
 
         # homepage
-        safe_goto(page, 'https://www.google.com/search?q=waitrose')
+        safe_goto(page, 'https://www.waitrose.com/ecom/sign-in')
 
         try:
             page.locator("button:has-text('Accept')").click(timeout=3000)
