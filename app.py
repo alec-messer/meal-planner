@@ -96,7 +96,13 @@ def build_basket_api():
 
         basket = build_basket(shopping_list, products)
 
-        return jsonify({'basket': basket})
+        # Run Playwright to build basket on Waitrose
+        basket_url = run_playwright(basket)
+
+        return jsonify({
+            'basket': basket,
+            'basket_url': basket_url
+        })
 
     except Exception as e:
         print('API ERROR:', e)
@@ -114,21 +120,24 @@ products = {
             'search': 'Waitrose Slower Reared 2 Chicken Breast Fillets',
             'size': 380,
             'unit': 'grams',
-            'price': 4.75
+            'price': 4.75,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-slower-reared-2-chicken-breast-fillets/690849-260860-260861'
         },
         {
             'id': 'chicken_large',
             'search': 'Waitrose Slower Reared Chicken Breast Fillets',
             'size': 600,
             'unit': 'grams',
-            'price': 5.5
+            'price': 5.5,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-slower-reared-chicken-breast-fillets/486988-707752-707753'
         },
         {
             'id': 'chicken_extra_large',
             'search': 'Waitrose Slower Reared Chicken Breast Fillets - XL Pack',
             'size': 1200,
             'unit': 'grams',
-            'price': 9.5
+            'price': 9.5,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-slower-reared-chicken-breast-fillets-xl-pack/698580-750402-750403'
         }
     ],
     'Beef Mince': [
@@ -137,14 +146,16 @@ products = {
             'search': 'Waitrose British Native Breed Beef Mince 12% Fat',
             'size': 500,
             'unit': 'grams',
-            'price': 4.50
+            'price': 5,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-british-native-breed-beef-mince-12-fat/400260-806217-806218'
         },
         {
             'id': 'beef_mince_large',
             'search': 'Waitrose British Native Breeds Beef Mince 15%',
             'size': 750,
             'unit': 'grams',
-            'price': 7
+            'price': 7,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-british-native-breeds-beef-mince-15/977544-827968-827969'
         }
     ],
     'Diced Beef': [
@@ -153,7 +164,8 @@ products = {
             'search': 'Essential British Beef Diced Braising Steak',
             'size': 400,
             'unit': 'grams',
-            'price': 4.5
+            'price': 4.5,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-british-native-breed-diced-beef-braising-steak/482510-806227-806228'
         }
     ],
     'Bacon': [
@@ -162,7 +174,8 @@ products = {
             'search': 'Waitrose 12 Made Without Nitrite Smoked Streaky Bacon Rashers',
             'size': 1,
             'unit': 'items',
-            'price': 4
+            'price': 4,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-12-made-without-nitrite-smoked-streaky-bacon-rashers/848434-780197-780198'
         }
     ],
     'Sausages': [
@@ -171,7 +184,8 @@ products = {
             'search': 'Waitrose 6 Cumberland Pork Sausages',
             'size': 400,
             'unit': 'grams',
-            'price': 4
+            'price': 4,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-6-cumberland-pork-sausages/657045-731320-731321'
         }
     ],
     'Chorizo': [
@@ -180,7 +194,8 @@ products = {
             'search': 'Waitrose Spanish Hot & Spicy Chorizo Ring',
             'size': 1,
             'unit': 'items',
-            'price': 3.75
+            'price': 3.75,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-spanish-hot-spicy-chorizo-ring/948990-846362-846363'
         }
     ],
     # VEGETABLES ################################
@@ -190,7 +205,8 @@ products = {
             'search': 'Essential Broccoli',
             'size': 1,
             'unit': 'items',
-            'price': 0.96
+            'price': 0.96,
+            'url' : 'https://www.waitrose.com/ecom/products/essential-broccoli/085242-43323-43324'
         }
     ],
     'Carrot': [
@@ -199,7 +215,8 @@ products = {
             'search': 'Essential British Loose Carrots',
             'size': 1,
             'unit': 'items',
-            'price': 0.1
+            'price': 0.1,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-british-loose-carrots/085125-43221-43222'
         }
     ],
     'Onion': [
@@ -208,7 +225,8 @@ products = {
             'search': 'Essential Onions',
             'size': 1,
             'unit': 'items',
-            'price': 0.16
+            'price': 0.16,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-onions/085115-43203-43204'
         }
     ],
     'Celery': [
@@ -217,7 +235,8 @@ products = {
             'search': 'Essential Green Celery',
             'size': 1,
             'unit': 'items',
-            'price': 0.9
+            'price': 0.9,
+            'url' : 'https://www.waitrose.com/ecom/products/essential-green-celery/086445-44146-44147'
         }
     ],
     'Pepper': [
@@ -226,7 +245,8 @@ products = {
             'search': 'Waitrose Red Peppers',
             'size': 1,
             'unit': 'items',
-            'price': 0.72
+            'price': 0.72,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-red-peppers/086412-44120-44121'
         }
     ],
     'Potatoes': [
@@ -235,7 +255,8 @@ products = {
             'search': 'Waitrose Maris Piper Potatoes',
             'size': 1,
             'unit': 'items',
-            'price': 2.2
+            'price': 2.2,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-maris-piper-potatoes/085063-372142-43169'
         }
     ],
     'Peas': [
@@ -244,7 +265,8 @@ products = {
             'search': 'Essential Frozen British Garden Peas',
             'size': 1,
             'unit': 'items',
-            'price': 1.25
+            'price': 1.25,
+            'url' : 'https://www.waitrose.com/ecom/products/essential-frozen-british-garden-peas/054003-27079-27080'
         }
     ],
     # OTHER ################################
@@ -254,7 +276,8 @@ products = {
             'search': 'No.1 Italian Mafaldine Pasta',
             'size': 1,
             'unit': 'items',
-            'price': 3
+            'price': 3,
+            'url' : 'https://www.waitrose.com/ecom/products/no1-italian-mafaldine-pasta/567635-828951-828952'
         }
     ],
     'Birria Paste': [
@@ -263,16 +286,8 @@ products = {
             'search': 'Waitrose Birria Paste',
             'size': 1,
             'unit': 'items',
-            'price': 2
-        }
-    ],
-    'Spag Bol Seasoning': [
-        {
-            'id': 'spag_bol_paste',
-            'search': 'Jamie Oliver Brilliant Bolognese Paste',
-            'size': 1,
-            'unit': 'items',
-            'price': 2.5
+            'price': 2,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-birria-paste/923695-1-2'
         }
     ],
     'Tortilla': [
@@ -281,23 +296,26 @@ products = {
             'search': 'Gran Luchito 10 Mexican Soft Taco Wraps',
             'size': 1,
             'unit': 'items',
-            'price': 2.2
+            'price': 2.2,
+            'url' : 'https://www.waitrose.com/ecom/products/gran-luchito-10-mexican-soft-taco-wraps/776278-703285-703286'
         }
     ],
     'Chopped Tomatoes': [
         {
             'id': 'chopped_tomatoes_small',
-            'search': 'Waitrose Finely Chopped Italian Tomatoes',
+            'search': 'Essential Chopped Tomatoes in Natural Juice',
             'size': 400,
             'unit': 'grams',
-            'price': 0.95
+            'price': 0.65,
+            'url' : 'https://www.waitrose.com/ecom/products/essential-chopped-tomatoes-in-natural-juice/019706-9575-9576'
         },
         {
             'id': 'chopped_tomatoes_large',
             'search': 'Essential Chopped Tomatoes in Natural Juice',
             'size': 1600,
             'unit': 'grams',
-            'price': 2.4
+            'price': 2.4,
+            'url' : 'https://www.waitrose.com/ecom/products/essential-chopped-tomatoes-in-natural-juice/073892-37497-37497'
         }
     ],
     'Cheddar': [
@@ -306,14 +324,16 @@ products = {
             'search': 'Cathedral City Mature Cheddar Cheese',
             'size': 350,
             'unit': 'grams',
-            'price': 4.25
+            'price': 4.25,
+            'url' : 'https://www.waitrose.com/ecom/products/cathedral-city-mature-cheddar-cheese/040136-19857-19858'
         },
         {
             'id': 'cheddar_large',
             'search': 'Cathedral City Mature Cheddar Cheese Large',
             'size': 550,
             'unit': 'grams',
-            'price': 4.6
+            'price': 4.6,
+            'url' : 'https://www.waitrose.com/ecom/products/cathedral-city-mature-cheddar-cheese-large/002463-816-817'
         }
     ],
     'Parmesan': [
@@ -322,7 +342,8 @@ products = {
             'search': 'Waitrose Grana Padano DOP Cheese Strength 4',
             'size': 175,
             'unit': 'grams',
-            'price': 3.3
+            'price': 3.3,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-grana-padano-dop-cheese-strength-4/605600-688808-688809'
         }
     ],
     'Eggs': [
@@ -331,7 +352,8 @@ products = {
             'search': 'Waitrose FR Mixed Size Eggs British Blacktail',
             'size': 1,
             'unit': 'items',
-            'price': 3.4
+            'price': 3.4,
+            'url' : 'https://www.waitrose.com/ecom/products/waitrose-fr-mixed-size-eggs-british-blacktail/082926-42143-42144'
         }
     ],
     'Microwave Rice': [
@@ -340,7 +362,8 @@ products = {
             'search': 'Veetee Steam Filtered Sticky Rice',
             'size': 1,
             'unit': 'items',
-            'price': 1.2
+            'price': 1.2,
+            'url' : 'https://www.waitrose.com/ecom/products/veetee-steam-filtered-sticky-rice/501941-757307-757308'
         }
     ]
 }
@@ -438,3 +461,62 @@ def build_basket(shopping_list, products):
                 })
 
     return basket
+
+def run_playwright(basket):
+    STORAGE_FILE = 'waitrose_session.json'
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False)
+
+        if os.path.exists(STORAGE_FILE):
+            context = browser.new_context(storage_state=STORAGE_FILE)
+        else:
+            context = browser.new_context()
+
+        page = context.new_page()
+        page.goto('https://www.waitrose.com/')
+
+        # قبول cookies if present
+        try:
+            page.locator("button:has-text('Accept')").click(timeout=3000)
+        except:
+            pass
+
+        # First run → manual login
+        if not os.path.exists(STORAGE_FILE):
+            print("Please log in manually...")
+            page.wait_for_timeout(60000)
+            context.storage_state(path=STORAGE_FILE)
+            print("Session saved.")
+
+        for item in basket:
+            url = item['url']
+            quantity = item['quantity']
+
+            print(f"Adding: {url} x{quantity}")
+
+            page.goto(url)
+            page.wait_for_load_state('domcontentloaded')
+            time.sleep(2)
+
+            try:
+                # --- SET QUANTITY VIA INPUT BOX ---
+                qty_input = page.locator("input[type='number']").first
+                qty_input.fill(str(quantity))
+
+                # --- CLICK ADD TO TROLLEY ---
+                page.locator("button:has-text('Add to Trolley')").click(timeout=5000)
+
+            except Exception as e:
+                print(f"Failed for {url}: {e}")
+                continue
+
+            time.sleep(1.5)
+
+        basket_url = "https://www.waitrose.com/ecom/shop/basket"
+        page.goto(basket_url)
+
+        context.storage_state(path=STORAGE_FILE)
+        browser.close()
+
+        return basket_url
