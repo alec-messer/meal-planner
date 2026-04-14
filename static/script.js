@@ -164,11 +164,11 @@ function shareList() {
 }
 
 function buildWaitroseBasket(basket) {
-    alert('1. Log in to Waitrose in the opened tabs.\n2. Then run this again if needed.');
+    // Save queue for userscript
+    localStorage.setItem('waitrose_basket_queue', JSON.stringify(basket));
 
-    basket.forEach(item => {
-        for (let i = 0; i < item.quantity; i++) {
-            window.open(item.url, '_blank');
-        }
-    });
+    alert('Now opening Waitrose. Stay on the tab — items will be added automatically.');
+
+    // Start the process
+    window.location.href = basket[0].url;
 }
