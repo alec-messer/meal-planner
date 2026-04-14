@@ -41,7 +41,6 @@ function buildShoppingJSON(totals) {
     Object.keys(totals).forEach(type => {
         Object.keys(totals[type]).forEach(name => {
             const { qty, unit } = totals[type][name];
-
             items.push({ name, qty, unit });
         });
     });
@@ -92,8 +91,23 @@ function generateList() {
     .then(res => res.json())
     .then(data => {
         console.log('Optimised basket:', data.basket);
-        localStorage.setItem('waitrose_basket_queue', JSON.stringify(data.basket));
-        
+
+        // =========================
+        // PRIMARY HANDOFF (IMPORTANT)
+        // =========================
+        localStorage.setItem(
+            'waitrose_basket_queue',
+            JSON.stringify(data.basket)
+        );
+
+        localStorage.setItem(
+            'waitrose_basket_handoff',
+            JSON.stringify({
+                basket: data.basket,
+                ts: Date.now()
+            })
+        );
+
         let output = '';
 
         // DATE
@@ -127,19 +141,8 @@ function generateList() {
             output += `\n`;
         });
 
-        // LOGIN LINK (clickable)
-        const basket = localStorage.getItem('waitrose_basket_queue');
-        const encodedBasket = encodeURIComponent(basket);
-        
-        // Final landing page AFTER login
-        const finalUrl = encodeURIComponent(
-            `https://www.waitrose.com/?basket=${encodedBasket}`
-        );
-        
-        // Sign-in URL with post-login redirect
-        output += `<a href="https://www.waitrose.com/ecom/sign-in?redirect=${finalUrl}" target="_blank">
-        Login to Waitrose
-        </a>`;
+        // SIMPLE LOGIN LINK (no redirect hacks)
+        output += `<a href="https://www.waitrose.com/ecom/sign-in" target="_blank">Login to Waitrose</a>`;
 
         document.getElementById('output').innerHTML = output;
         document.getElementById('output-card').classList.remove('hidden');
