@@ -126,29 +126,11 @@ function generateList() {
             output += `\n`;
         });
 
-        // OPTIMISED BASKET
-        output += `OPTIMISED BASKET\n\n`;
+        // LOGIN LINK (clickable)
+        output += `<a href="https://www.waitrose.com/ecom/sign-in" target="_blank">Login to Waitrose</a>`;
 
-        data.basket.forEach(item => {
-            output += `${item.quantity} x ${item.search}\n`;
-        });
-
-        // LOGIN BUTTON
-        output += `\nLOGIN TO WAITROSE:\n`;
-        output += `${data.login_url}\n\n`;
-
-        // BUILD BUTTON
-        output += `CLICK BELOW TO BUILD BASKET\n`;
-
-        document.getElementById('output').innerText = output;
+        document.getElementById('output').innerHTML = output;
         document.getElementById('output-card').classList.remove('hidden');
-
-        // 👉 ADD BUTTON DYNAMICALLY
-        const btn = document.createElement('button');
-        btn.innerText = 'Build Waitrose Basket';
-        btn.onclick = () => buildWaitroseBasket(data.basket);
-
-        document.getElementById('output-card').appendChild(btn);
     })
     .catch(err => {
         console.error('API error:', err);
