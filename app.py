@@ -91,7 +91,8 @@ def build_basket_api():
         basket = build_basket(shopping_list, products)
 
         return jsonify({
-            'basket': basket
+            'basket': basket,
+            'login_url': 'https://www.waitrose.com/ecom/sign-in'
         })
 
     except Exception as e:
