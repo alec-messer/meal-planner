@@ -92,7 +92,8 @@ function generateList() {
     .then(res => res.json())
     .then(data => {
         console.log('Optimised basket:', data.basket);
-
+        localStorage.setItem('waitrose_basket_queue', JSON.stringify(data.basket));
+        
         let output = '';
 
         // DATE
