@@ -128,7 +128,18 @@ function generateList() {
         });
 
         // LOGIN LINK (clickable)
-        output += `<a href="#" onclick='startWaitroseFlow()'>Login to Waitrose</a>`;
+        const basket = localStorage.getItem('waitrose_basket_queue');
+        const encodedBasket = encodeURIComponent(basket);
+        
+        // Final landing page AFTER login
+        const finalUrl = encodeURIComponent(
+            `https://www.waitrose.com/?basket=${encodedBasket}`
+        );
+        
+        // Sign-in URL with post-login redirect
+        output += `<a href="https://www.waitrose.com/ecom/sign-in?redirect=${finalUrl}" target="_blank">
+        Login to Waitrose
+        </a>`;
 
         document.getElementById('output').innerHTML = output;
         document.getElementById('output-card').classList.remove('hidden');
@@ -144,18 +155,4 @@ function shareList() {
     if (navigator.share) {
         navigator.share({ title: 'Shopping List', text });
     }
-}
-
-function startWaitroseFlow() {
-    const queue = localStorage.getItem('waitrose_basket_queue');
-
-    if (!queue) {
-        alert('No basket found');
-        return;
-    }
-
-    // Pass basket via URL (temporary transport)
-    const encoded = encodeURIComponent(queue);
-
-    window.location.href = `https://www.waitrose.com/?basket=${encoded}`;
 }
