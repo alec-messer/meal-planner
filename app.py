@@ -469,7 +469,10 @@ def run_playwright(basket):
     STORAGE_FILE = 'waitrose_session.json'
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(
+            headless=True,
+            args=['--no-sandbox', '--disable-setuid-sandbox']
+        )
 
         if os.path.exists(STORAGE_FILE):
             context = browser.new_context(storage_state=STORAGE_FILE)
