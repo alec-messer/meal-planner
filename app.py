@@ -438,7 +438,8 @@ def build_basket(shopping_list, products):
                 'id': opt['id'],
                 'search': opt['search'],
                 'quantity': qty,
-                'total_price': round(qty * opt['price'], 2)
+                'total_price': round(qty * opt['price'], 2),
+                'url': opt['url']
             })
 
         # --- GRAMS ---
@@ -457,7 +458,8 @@ def build_basket(shopping_list, products):
                     'id': opt['id'],
                     'search': opt['search'],
                     'quantity': count,
-                    'total_price': round(count * opt['price'], 2)
+                    'total_price': round(count * opt['price'], 2),
+                    'url': opt['url']
                 })
 
     return basket
