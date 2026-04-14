@@ -54,9 +54,9 @@ function generateList() {
 
     const totals = {
         meat: {},
-        veg: {},
-        fruit: {},
         dairy: {},
+        fruit: {},
+        veg: {},
         other: {}
     };
 
@@ -71,7 +71,10 @@ function generateList() {
                 const type = data.type || 'other';
 
                 if (!totals[type][item]) {
-                    totals[type][item] = { qty: 0, unit: data.unit };
+                    totals[type][item] = {
+                        qty: 0,
+                        unit: data.unit
+                    };
                 }
 
                 totals[type][item].qty += data.qty;
@@ -88,49 +91,68 @@ function generateList() {
     })
     .then(res => res.json())
     .then(data => {
+        console.log('Optimised basket:', data.basket);
 
         let output = '';
 
+        // DATE
         const now = new Date();
         const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const dayName = days[now.getDay()];
+        const date = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
 
-        output += `Shopping List\n${days[now.getDay()]} ${now.getDate()}/${now.getMonth()+1}\n\n`;
+        output += `Shopping List\n${dayName} ${date}/${month}\n\n`;
 
-        const typeOrder = ['meat','veg','fruit','dairy','other'];
+        const typeOrder = ['meat', 'veg', 'fruit', 'dairy', 'other'];
 
         typeOrder.forEach(type => {
             const items = totals[type];
-            if (!Object.keys(items).length) return;
+            if (Object.keys(items).length === 0) return;
 
             output += `${type.toUpperCase()}\n`;
 
-            Object.keys(items).forEach(name => {
-                const { qty, unit } = items[name];
-                output += `${qty} (${unit}) ${name}\n`;
+            const rows = Object.keys(items).sort().map(item => {
+                const { qty, unit } = items[item];
+                return { name: item, left: `${qty} (${unit})` };
+            });
+
+            const maxLeftLength = Math.max(...rows.map(r => r.left.length));
+
+            rows.forEach(row => {
+                output += `${row.left.padEnd(maxLeftLength)}  ${row.name}\n`;
             });
 
             output += `\n`;
         });
 
+        // OPTIMISED BASKET
         output += `OPTIMISED BASKET\n\n`;
 
         data.basket.forEach(item => {
-            output += `${item.quantity} x ${item.search} (£${item.total_price})\n`;
+            output += `${item.quantity} x ${item.search}\n`;
         });
 
-        output += `\nOPEN ITEMS:\n`;
+        // LOGIN BUTTON
+        output += `\nLOGIN TO WAITROSE:\n`;
+        output += `${data.login_url}\n\n`;
 
-        data.basket.forEach(item => {
-            output += `${item.url}\n`;
-        });
+        // BUILD BUTTON
+        output += `CLICK BELOW TO BUILD BASKET\n`;
 
         document.getElementById('output').innerText = output;
         document.getElementById('output-card').classList.remove('hidden');
 
-        // optional auto-run mode
-        window.currentBasket = data.basket;
+        // 👉 ADD BUTTON DYNAMICALLY
+        const btn = document.createElement('button');
+        btn.innerText = 'Build Waitrose Basket';
+        btn.onclick = () => buildWaitroseBasket(data.basket);
+
+        document.getElementById('output-card').appendChild(btn);
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+        console.error('API error:', err);
+    });
 }
 
 function shareList() {
@@ -139,4 +161,14 @@ function shareList() {
     if (navigator.share) {
         navigator.share({ title: 'Shopping List', text });
     }
+}
+
+function buildWaitroseBasket(basket) {
+    alert('1. Log in to Waitrose in the opened tabs.\n2. Then run this again if needed.');
+
+    basket.forEach(item => {
+        for (let i = 0; i < item.quantity; i++) {
+            window.open(item.url, '_blank');
+        }
+    });
 }
