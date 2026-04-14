@@ -468,32 +468,66 @@ def build_basket(shopping_list, products):
 def run_playwright(basket):
     STORAGE_FILE = 'waitrose_session.json'
 
+    def safe_goto(page, url):
+        for attempt in range(3):
+            try:
+                page.goto(url, wait_until='domcontentloaded', timeout=60000)
+                return
+            except Exception as e:
+                print(f"GOTO RETRY {attempt+1}:", e)
+                time.sleep(2)
+        raise Exception(f"Failed to load {url}")
+
     with sync_playwright() as p:
         browser = p.chromium.launch(
             headless=True,
-            args=['--no-sandbox', '--disable-setuid-sandbox']
+            args=[
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-blink-features=AutomationControlled',
+                '--disable-http2'
+            ]
         )
 
         if os.path.exists(STORAGE_FILE):
-            context = browser.new_context(storage_state=STORAGE_FILE)
+            context = browser.new_context(
+                storage_state=STORAGE_FILE,
+                user_agent=(
+                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                    'AppleWebKit/537.36 (KHTML, like Gecko) '
+                    'Chrome/120.0.0.0 Safari/537.36'
+                ),
+                viewport={'width': 1280, 'height': 800},
+                locale='en-GB',
+                timezone_id='Europe/London'
+            )
         else:
-            context = browser.new_context()
+            context = browser.new_context(
+                user_agent=(
+                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                    'AppleWebKit/537.36 (KHTML, like Gecko) '
+                    'Chrome/120.0.0.0 Safari/537.36'
+                ),
+                viewport={'width': 1280, 'height': 800},
+                locale='en-GB',
+                timezone_id='Europe/London'
+            )
 
         page = context.new_page()
-        page.goto('https://www.waitrose.com/')
 
-        # قبول cookies if present
+        # homepage
+        safe_goto(page, 'https://www.waitrose.com/')
+
         try:
             page.locator("button:has-text('Accept')").click(timeout=3000)
         except:
             pass
 
-        # First run → manual login
+        # first run login
         if not os.path.exists(STORAGE_FILE):
             print("Please log in manually...")
             page.wait_for_timeout(60000)
             context.storage_state(path=STORAGE_FILE)
-            print("Session saved.")
 
         for item in basket:
             url = item['url']
@@ -501,16 +535,13 @@ def run_playwright(basket):
 
             print(f"Adding: {url} x{quantity}")
 
-            page.goto(url)
-            page.wait_for_load_state('domcontentloaded')
+            safe_goto(page, url)
             time.sleep(2)
 
             try:
-                # --- SET QUANTITY VIA INPUT BOX ---
                 qty_input = page.locator("input[type='number']").first
                 qty_input.fill(str(quantity))
 
-                # --- CLICK ADD TO TROLLEY ---
                 page.locator("button:has-text('Add to Trolley')").click(timeout=5000)
 
             except Exception as e:
@@ -520,7 +551,7 @@ def run_playwright(basket):
             time.sleep(1.5)
 
         basket_url = "https://www.waitrose.com/ecom/shop/basket"
-        page.goto(basket_url)
+        safe_goto(page, basket_url)
 
         context.storage_state(path=STORAGE_FILE)
         browser.close()
