@@ -25,8 +25,9 @@ def index():
     meals = {doc.id: doc.to_dict()['ingredients'] for doc in docs}
 
     success = request.args.get('success')
+    deleted = request.args.get('deleted')
 
-    return render_template('index.html', meals=meals, success=success)
+    return render_template('index.html', meals=meals, success=success, deleted=deleted)
 
 
 @app.route('/add_meal', methods=['POST'])
