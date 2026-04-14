@@ -129,6 +129,7 @@ function generateList() {
 
         // LOGIN LINK (clickable)
         output += `<a href="https://www.waitrose.com/ecom/sign-in" target="_blank">Login to Waitrose</a>`;
+        output += `<a href="#" onclick='startWaitroseFlow()'>Login to Waitrose</a>`;
 
         document.getElementById('output').innerHTML = output;
         document.getElementById('output-card').classList.remove('hidden');
@@ -146,12 +147,16 @@ function shareList() {
     }
 }
 
-function buildWaitroseBasket(basket) {
-    // Save queue for userscript
-    localStorage.setItem('waitrose_basket_queue', JSON.stringify(basket));
+function startWaitroseFlow() {
+    const queue = localStorage.getItem('waitrose_basket_queue');
 
-    alert('Now opening Waitrose. Stay on the tab — items will be added automatically.');
+    if (!queue) {
+        alert('No basket found');
+        return;
+    }
 
-    // Start the process
-    window.location.href = basket[0].url;
+    // Pass basket via URL (temporary transport)
+    const encoded = encodeURIComponent(queue);
+
+    window.location.href = `https://www.waitrose.com/?basket=${encoded}`;
 }
