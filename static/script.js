@@ -48,6 +48,16 @@ function buildShoppingJSON(totals) {
     return items;
 }
 
+function startWaitroseFlow() {
+    const basket = localStorage.getItem('waitrose_basket_queue');
+
+    if (!basket) return;
+
+    sessionStorage.setItem('waitrose_basket_handoff', basket);
+
+    window.location.href = 'https://www.waitrose.com/ecom/sign-in';
+}
+
 function generateList() {
     const selects = document.querySelectorAll('.meal-select');
 
@@ -90,40 +100,21 @@ function generateList() {
     })
     .then(res => res.json())
     .then(data => {
-        console.log('Optimised basket:', data.basket);
 
-        // =========================
-        // PRIMARY HANDOFF (IMPORTANT)
-        // =========================
-        localStorage.setItem(
-            'waitrose_basket_queue',
-            JSON.stringify(data.basket)
-        );
-
-        localStorage.setItem(
-            'waitrose_basket_handoff',
-            JSON.stringify({
-                basket: data.basket,
-                ts: Date.now()
-            })
-        );
+        localStorage.setItem('waitrose_basket_queue', JSON.stringify(data.basket));
 
         let output = '';
 
-        // DATE
         const now = new Date();
         const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-        const dayName = days[now.getDay()];
-        const date = String(now.getDate()).padStart(2, '0');
-        const month = String(now.getMonth() + 1).padStart(2, '0');
 
-        output += `Shopping List\n${dayName} ${date}/${month}\n\n`;
+        output += `Shopping List\n${days[now.getDay()]} ${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}\n\n`;
 
         const typeOrder = ['meat', 'veg', 'fruit', 'dairy', 'other'];
 
         typeOrder.forEach(type => {
             const items = totals[type];
-            if (Object.keys(items).length === 0) return;
+            if (!Object.keys(items).length) return;
 
             output += `${type.toUpperCase()}\n`;
 
@@ -132,23 +123,19 @@ function generateList() {
                 return { name: item, left: `${qty} (${unit})` };
             });
 
-            const maxLeftLength = Math.max(...rows.map(r => r.left.length));
+            const maxLeft = Math.max(...rows.map(r => r.left.length));
 
-            rows.forEach(row => {
-                output += `${row.left.padEnd(maxLeftLength)}  ${row.name}\n`;
+            rows.forEach(r => {
+                output += `${r.left.padEnd(maxLeft)}  ${r.name}\n`;
             });
 
             output += `\n`;
         });
 
-        // SIMPLE LOGIN LINK (no redirect hacks)
-        output += `<a href="https://www.waitrose.com/ecom/sign-in" target="_blank">Login to Waitrose</a>`;
+        output += `<a href="#" onclick="startWaitroseFlow()">Login to Waitrose</a>`;
 
         document.getElementById('output').innerHTML = output;
         document.getElementById('output-card').classList.remove('hidden');
-    })
-    .catch(err => {
-        console.error('API error:', err);
     });
 }
 
