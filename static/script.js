@@ -67,7 +67,6 @@ function appendBasketToOutput(basket) {
 function generateList() {
     const selects = document.querySelectorAll('.meal-select');
 
-    // Grouped totals by type
     const totals = {
         meat: {},
         dairy: {},
@@ -83,7 +82,7 @@ function generateList() {
             const ingredients = MEALS[meal];
 
             Object.keys(ingredients).forEach(item => {
-                const data = ingredients[item]; // {qty, unit, type}
+                const data = ingredients[item];
                 const type = data.type || 'other';
 
                 if (!totals[type][item]) {
@@ -110,54 +109,64 @@ function generateList() {
     .then(res => res.json())
     .then(data => {
         console.log('Optimised basket:', data.basket);
-    
-        // Optional: append to output
-        appendBasketToOutput(data.basket);
+
+        let output = '';
+
+        // 📅 DATE
+        const now = new Date();
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+        const dayName = days[now.getDay()];
+        const date = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+
+        const dateHeader = `${dayName} ${date}/${month}`;
+
+        output += `Shopping List\n${dateHeader}\n\n`;
+
+        const typeOrder = ['meat', 'veg', 'fruit', 'dairy', 'other'];
+
+        typeOrder.forEach(type => {
+            const items = totals[type];
+
+            if (Object.keys(items).length === 0) return;
+
+            output += `${type.toUpperCase()}\n`;
+
+            const rows = Object.keys(items).sort().map(item => {
+                const { qty, unit } = items[item];
+                const left = `${qty} (${unit})`;
+                return { name: item, left };
+            });
+
+            const maxLeftLength = Math.max(...rows.map(r => r.left.length));
+
+            rows.forEach(row => {
+                const paddedLeft = row.left.padEnd(maxLeftLength, ' ');
+                output += `${paddedLeft}  ${row.name}\n`;
+            });
+
+            output += `\n`;
+        });
+
+        // Add optimised basket
+        output += `OPTIMISED BASKET\n\n`;
+
+        data.basket.forEach(item => {
+            output += `${item.quantity} x ${item.search} (£${item.total_price})\n`;
+        });
+
+        // Add basket link
+        if (data.basket_url) {
+            output += `\nOpen basket:\n${data.basket_url}\n`;
+        }
+
+        document.getElementById('output').innerText = output;
+        document.getElementById('output-card').classList.remove('hidden');
     })
     .catch(err => {
         console.error('API error:', err);
     });
-
-    // 📅 DATE
-    const now = new Date();
-    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-
-    const dayName = days[now.getDay()];
-    const date = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-
-    const dateHeader = `${dayName} ${date}/${month}`;
-
-    let output = `Shopping List\n${dateHeader}\n\n`;
-
-    const typeOrder = ['meat', 'veg', 'fruit', 'dairy', 'other'];
-
-    typeOrder.forEach(type => {
-        const items = totals[type];
-
-        if (Object.keys(items).length === 0) return;
-
-        output += `${type.toUpperCase()}\n`;
-
-        // Build rows for alignment
-        const rows = Object.keys(items).sort().map(item => {
-            const { qty, unit } = items[item];
-            const left = `${qty} (${unit})`;
-            return { name: item, left };
-        });
-
-        const maxLeftLength = Math.max(...rows.map(r => r.left.length));
-
-        rows.forEach(row => {
-            const paddedLeft = row.left.padEnd(maxLeftLength, ' ');
-            output += `${paddedLeft}  ${row.name}\n`;
-        });
-
-        output += `\n`;
-    });
-
-    document.getElementById('output').innerText = output;
-    document.getElementById('output-card').classList.remove('hidden');
 }
 
 function shareList() {
