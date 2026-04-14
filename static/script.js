@@ -128,7 +128,6 @@ function generateList() {
         });
 
         // LOGIN LINK (clickable)
-        output += `<a href="https://www.waitrose.com/ecom/sign-in" target="_blank">Login to Waitrose</a>`;
         output += `<a href="#" onclick='startWaitroseFlow()'>Login to Waitrose</a>`;
 
         document.getElementById('output').innerHTML = output;
