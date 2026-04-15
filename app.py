@@ -13,7 +13,7 @@ def update_basket(basket_dict):
     BRANCH = 'main'
     
     HEADERS = {
-        'Authorization': f'Bearer {GITHUB_TOKEN}',
+        'Authorization': f'token {GITHUB_TOKEN}',
         'Accept': 'application/vnd.github+json'
     }
 
