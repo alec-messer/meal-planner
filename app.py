@@ -7,7 +7,7 @@ from firebase_admin import credentials, firestore
 from flask import Flask, render_template, request, redirect, jsonify
 
 def update_basket(basket_dict):
-    GITHUB_TOKEN = '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'
+    GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
     print(GITHUB_TOKEN)
     REPO = 'alec-messer/shopping-basket'
     FILE_PATH = 'basket.json'
