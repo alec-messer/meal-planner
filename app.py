@@ -1,8 +1,47 @@
 import os
 import json
+import requests
+import base64
 import firebase_admin
 from firebase_admin import credentials, firestore
 from flask import Flask, render_template, request, redirect, jsonify
+
+GITHUB_TOKEN = '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'
+REPO = 'alec-messer/shopping-basket'
+FILE_PATH = 'basket.json'
+BRANCH = 'main'
+
+HEADERS = {
+    'Authorization': f'Bearer {GITHUB_TOKEN}',
+    'Accept': 'application/vnd.github+json'
+}
+
+def update_basket(basket_dict):
+    url = f'https://api.github.com/repos/{REPO}/contents/{FILE_PATH}'
+
+    url = f'https://api.github.com/repos/{REPO}/contents/{FILE_PATH}?ref={BRANCH}'
+    r = requests.get(url, headers=HEADERS)
+    sha = r.json()['sha']
+
+    content_str = json.dumps(basket_dict, separators=(',', ':'))
+    encoded_content = base64.b64encode(content_str.encode()).decode()
+
+    payload = {
+        'message': 'update basket',
+        'content': encoded_content,
+        'branch': BRANCH
+    }
+
+    # Only include SHA if file exists
+    if sha:
+        payload['sha'] = sha
+
+    r = requests.put(url, headers=HEADERS, json=payload)
+
+    if r.status_code not in [200, 201]:
+        raise Exception(f'GitHub update failed: {r.text}')
+
+    return r.json()
 
 def init_firestore():
     if not firebase_admin._apps:
@@ -89,11 +128,9 @@ def build_basket_api():
             return jsonify({'error': 'No data provided'}), 400
 
         basket = build_basket(shopping_list, products)
-
-        return jsonify({
-            'basket': basket,
-            'login_url': 'https://www.waitrose.com/ecom/sign-in'
-        })
+        basket = update_basket(basket)
+        
+        return
 
     except Exception as e:
         print('API ERROR:', e)
@@ -422,10 +459,10 @@ def build_basket(shopping_list, products):
             opt = options[0]  # assume single option
 
             basket.append({
-                'id': opt['id'],
-                'search': opt['search'],
+                #'id': opt['id'],
+                #'search': opt['search'],
                 'quantity': qty,
-                'total_price': round(qty * opt['price'], 2),
+                #'total_price': round(qty * opt['price'], 2),
                 'url': opt['url']
             })
 
@@ -442,10 +479,10 @@ def build_basket(shopping_list, products):
                 opt = next(o for o in options if o['id'] == opt_id)
 
                 basket.append({
-                    'id': opt['id'],
-                    'search': opt['search'],
+                    #'id': opt['id'],
+                    #'search': opt['search'],
                     'quantity': count,
-                    'total_price': round(count * opt['price'], 2),
+                    #'total_price': round(count * opt['price'], 2),
                     'url': opt['url']
                 })
 
