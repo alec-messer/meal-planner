@@ -3,3 +3,5 @@ psycopg2-binary
 gunicorn
 firebase_admin
 playwright
+base64
+requests
