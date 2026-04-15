@@ -8,6 +8,7 @@ from flask import Flask, render_template, request, redirect, jsonify
 
 def update_basket(basket_dict):
     GITHUB_TOKEN = os.getenv('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')
+    print(GITHUB_TOKEN)
     REPO = 'alec-messer/shopping-basket'
     FILE_PATH = 'basket.json'
     BRANCH = 'main'
