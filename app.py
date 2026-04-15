@@ -16,12 +16,18 @@ def update_basket(basket_dict):
         'Authorization': f'Bearer {GITHUB_TOKEN}',
         'Accept': 'application/vnd.github+json'
     }
-    
-    url = f'https://api.github.com/repos/{REPO}/contents/{FILE_PATH}'
 
     url = f'https://api.github.com/repos/{REPO}/contents/{FILE_PATH}?ref={BRANCH}'
     r = requests.get(url, headers=HEADERS)
-    sha = r.json()['sha']
+
+    if r.status_code == 200:
+        sha = r.json()['sha']
+    elif r.status_code == 404:
+        raise Exception(f'Error getting SHA: {r.text}') 
+    else:
+        raise Exception(f'Error getting SHA: {r.text}')
+
+    url = f'https://api.github.com/repos/{REPO}/contents/{FILE_PATH}'
 
     content_str = json.dumps(basket_dict, separators=(',', ':'))
     encoded_content = base64.b64encode(content_str.encode()).decode()
@@ -32,9 +38,8 @@ def update_basket(basket_dict):
         'branch': BRANCH
     }
 
-    # Only include SHA if file exists
     if sha:
-        payload['sha'] = sha
+        payload['sha'] = sha  # required for overwrite
 
     r = requests.put(url, headers=HEADERS, json=payload)
 
