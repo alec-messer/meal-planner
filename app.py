@@ -136,7 +136,7 @@ def build_basket_api():
         basket = build_basket(shopping_list, products)
         basket = update_basket(basket)
         
-        return
+        return basket
 
     except Exception as e:
         print('API ERROR:', e)
