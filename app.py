@@ -6,17 +6,17 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 from flask import Flask, render_template, request, redirect, jsonify
 
-GITHUB_TOKEN = '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'
-REPO = 'alec-messer/shopping-basket'
-FILE_PATH = 'basket.json'
-BRANCH = 'main'
-
-HEADERS = {
-    'Authorization': f'Bearer {GITHUB_TOKEN}',
-    'Accept': 'application/vnd.github+json'
-}
-
 def update_basket(basket_dict):
+    GITHUB_TOKEN = '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'
+    REPO = 'alec-messer/shopping-basket'
+    FILE_PATH = 'basket.json'
+    BRANCH = 'main'
+    
+    HEADERS = {
+        'Authorization': f'Bearer {GITHUB_TOKEN}',
+        'Accept': 'application/vnd.github+json'
+    }
+    
     url = f'https://api.github.com/repos/{REPO}/contents/{FILE_PATH}'
 
     url = f'https://api.github.com/repos/{REPO}/contents/{FILE_PATH}?ref={BRANCH}'
