@@ -91,8 +91,6 @@ function generateList() {
     .then(res => res.json())
     .then(data => {
 
-        localStorage.setItem('waitrose_basket_queue', JSON.stringify(data.basket));
-
         let output = '';
 
         const now = new Date();
