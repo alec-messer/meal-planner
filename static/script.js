@@ -48,16 +48,6 @@ function buildShoppingJSON(totals) {
     return items;
 }
 
-function startWaitroseFlow() {
-    const basket = localStorage.getItem('waitrose_basket_queue');
-
-    if (!basket) return;
-
-    sessionStorage.setItem('waitrose_basket_handoff', basket);
-
-    window.location.href = 'https://www.waitrose.com/ecom/sign-in';
-}
-
 function generateList() {
     const selects = document.querySelectorAll('.meal-select');
 
@@ -132,7 +122,7 @@ function generateList() {
             output += `\n`;
         });
 
-        output += `<a href="#" onclick="startWaitroseFlow()">Login to Waitrose</a>`;
+        output += `<a href="#" onclick="https://www.waitrose.com/ecom/sign-in">Login to Waitrose</a>`;
 
         document.getElementById('output').innerHTML = output;
         document.getElementById('output-card').classList.remove('hidden');
